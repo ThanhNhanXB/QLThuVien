@@ -1,4 +1,2 @@
 TinhNang1: Xuat Ten Thanh Vien
 TinhNang3: Xoa ThanhVien
-
-TinhNang5: Nhap ThanhVien

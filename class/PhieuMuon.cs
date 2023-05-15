@@ -9,9 +9,9 @@ namespace QLThuVien
     class PhieuMuon
     {
         //fields
-        private int _soPhieuMuon, _ngayPhaiTra, _tinhTrangPhieuMuon, _sTTPhieuMuon;
+        private int _soPhieuMuon, _tinhTrangPhieuMuon, _sTTPhieuMuon;
         private string _maBanDoc, _maSach;
-        private DateTime _ngayMuon;
+        private DateTime _ngayMuon, _ngayPhaiTra;
         //properties
         public int SoPhieuMuon
         {

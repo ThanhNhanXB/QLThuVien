@@ -10,7 +10,7 @@ namespace QLThuVien
     {
         //fields
         private string _maBanDoc, _tenBanDoc;
-        private int _ngayDangkyBD;
+        private DateTime _ngayDangkyBD;
         //properties
         public string MaBanDoc
         {

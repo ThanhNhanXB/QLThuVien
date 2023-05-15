@@ -9,8 +9,8 @@ namespace QLThuVien
     class Sach
     {
         //fields
-        private string _maSach, _tenSach, _tacGia;
-        private int _nhaXuatBan, _tinhTrangSach, _soTrang, _giaBan, _namPhatHanh;
+        private string _maSach, _tenSach, _tacGia,_nhaXuatBan;
+        private int _tinhTrangSach, _soTrang, _giaBan, _namPhatHanh;
         private DateTime _ngayNhapKho;
         //properties
         public string MaSach

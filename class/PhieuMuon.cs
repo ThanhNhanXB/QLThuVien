@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace projeck_CTDL_giai_thuat
+namespace QLThuVien
 {
     class PhieuMuon
     {
@@ -12,17 +12,6 @@ namespace projeck_CTDL_giai_thuat
         private int _soPhieuMuon, _ngayPhaiTra, _tinhTrangPhieuMuon, _sTTPhieuMuon;
         private string _maBanDoc, _maSach;
         private DateTime _ngayMuon;
-        //constructor
-        public PhieuMuon(int _soPhieuMuon, int _ngayPhaiTra, int _tinhTrangPhieuMuon, int _sTTPhieuMuon, string _maBanDoc, string _maSach, DateTime _ngayMuon)
-        {
-            this._soPhieuMuon = _soPhieuMuon;
-            this._ngayPhaiTra = _ngayPhaiTra;
-            this._tinhTrangPhieuMuon = _tinhTrangPhieuMuon;
-            this._sTTPhieuMuon = _sTTPhieuMuon;
-            this._maBanDoc = _maBanDoc;
-            this._maSach = _maSach;
-            this._ngayMuon = _ngayMuon;
-        }
         //properties
         public int SoPhieuMuon
         {
@@ -113,6 +102,22 @@ namespace projeck_CTDL_giai_thuat
             {
                 _ngayMuon = value;
             }
+        }
+        //constructor day du
+        public PhieuMuon(int _soPhieuMuon, int _ngayPhaiTra, int _tinhTrangPhieuMuon, int _sTTPhieuMuon, string _maBanDoc, string _maSach, DateTime _ngayMuon)
+        {
+            this._soPhieuMuon = _soPhieuMuon;
+            this._ngayPhaiTra = _ngayPhaiTra;
+            this._tinhTrangPhieuMuon = _tinhTrangPhieuMuon;
+            this._sTTPhieuMuon = _sTTPhieuMuon;
+            this._maBanDoc = _maBanDoc;
+            this._maSach = _maSach;
+            this._ngayMuon = _ngayMuon;
+        }
+        //constrctor khong tham so
+        public PhieuMuon()
+        {
+
         }
         //method
         public string toString()

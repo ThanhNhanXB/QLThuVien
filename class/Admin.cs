@@ -4,18 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace projeck_CTDL_giai_thuat
+namespace QLThuVien
 {
     class Admin
     {
         //fields
         private string _user, _password;
-        //constructor
-        public Admin(string _admin, string _password)
-        {
-            this._user = _admin;
-            this._password = _password;
-        }
         //properties
         public string User
         {
@@ -41,6 +35,17 @@ namespace projeck_CTDL_giai_thuat
             {
                 _password = value;
             }
+        }
+        //constructor day du
+        public Admin(string _admin, string _password)
+        {
+            this._user = _admin;
+            this._password = _password;
+        }
+        //constructor khong tham so
+        public Admin()
+        {
+
         }
         //method
         public string toString()

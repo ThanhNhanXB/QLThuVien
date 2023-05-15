@@ -4,20 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace projeck_CTDL_giai_thuat
+namespace QLThuVien
 {
     class BanDoc
     {
         //fields
         private string _maBanDoc, _tenBanDoc;
         private int _ngayDangkyBD;
-        //method
-        public BanDoc(string _maBanDoc, string _tenBanDoc, int _ngayDangkyBD)
-        {
-            this._maBanDoc = _maBanDoc;
-            this._tenBanDoc = _tenBanDoc;
-            this._ngayDangkyBD = _ngayDangkyBD;
-        }
         //properties
         public string MaBanDoc
         {
@@ -56,6 +49,18 @@ namespace projeck_CTDL_giai_thuat
             {
                 _tenBanDoc = value;
             }
+        }
+        //constructor day du
+        public BanDoc(string _maBanDoc, string _tenBanDoc, int _ngayDangkyBD)
+        {
+            this._maBanDoc = _maBanDoc;
+            this._tenBanDoc = _tenBanDoc;
+            this._ngayDangkyBD = _ngayDangkyBD;
+        }
+        //constructor khong tham so
+        public BanDoc()
+        {
+
         }
         //method
         public string toString()

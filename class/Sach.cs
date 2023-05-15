@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace projeck_CTDL_giai_thuat
+namespace QLThuVien
 {
     class Sach
     {
@@ -12,19 +12,6 @@ namespace projeck_CTDL_giai_thuat
         private string _maSach, _tenSach, _tacGia;
         private int _nhaXuatBan, _tinhTrangSach, _soTrang, _giaBan, _namPhatHanh;
         private DateTime _ngayNhapKho;
-        //constructor
-        public Sach(string _maSach, string _tenSach, string _tacGia, int _nhaXuatBan, int _tinhTrangSach, int _soTrang, int _giaBan, int _namPhatHanh, DateTime _ngayNhapKho)
-        {
-            this._maSach = _maSach;
-            this._tenSach = _tenSach;
-            this._tacGia = _tacGia;
-            this._nhaXuatBan = _nhaXuatBan;
-            this._tinhTrangSach = _tinhTrangSach;
-            this._soTrang = _soTrang;
-            this._giaBan = _giaBan;
-            this._namPhatHanh = _namPhatHanh;
-            this._ngayNhapKho = _ngayNhapKho;
-        }
         //properties
         public string MaSach
         {
@@ -141,6 +128,24 @@ namespace projeck_CTDL_giai_thuat
             {
                 _ngayNhapKho = value;
             }
+        }
+        //constructor day du
+        public Sach(string _maSach, string _tenSach, string _tacGia, int _nhaXuatBan, int _tinhTrangSach, int _soTrang, int _giaBan, int _namPhatHanh, DateTime _ngayNhapKho)
+        {
+            this._maSach = _maSach;
+            this._tenSach = _tenSach;
+            this._tacGia = _tacGia;
+            this._nhaXuatBan = _nhaXuatBan;
+            this._tinhTrangSach = _tinhTrangSach;
+            this._soTrang = _soTrang;
+            this._giaBan = _giaBan;
+            this._namPhatHanh = _namPhatHanh;
+            this._ngayNhapKho = _ngayNhapKho;
+        }
+        //constructor khong tham so
+        public Sach()
+        {
+
         }
         //method
         public string toString()

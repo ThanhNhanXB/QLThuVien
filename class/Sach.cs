@@ -1,4 +1,7 @@
-﻿using System;
+﻿/*
+ * Đồ Án Quản Lý Thư Viện 
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -52,7 +55,7 @@ namespace QLThuVien
             }
         }
         //properties
-        public int NhaXuatBan
+        public string NhaXuatBan
         {
             get
             {
@@ -130,7 +133,7 @@ namespace QLThuVien
             }
         }
         //constructor day du
-        public Sach(string _maSach, string _tenSach, string _tacGia, int _nhaXuatBan, int _tinhTrangSach, int _soTrang, int _giaBan, int _namPhatHanh, DateTime _ngayNhapKho)
+        public Sach(string _maSach, string _tenSach, string _tacGia, string _nhaXuatBan, int _tinhTrangSach, int _soTrang, int _giaBan, int _namPhatHanh, DateTime _ngayNhapKho)
         {
             this._maSach = _maSach;
             this._tenSach = _tenSach;

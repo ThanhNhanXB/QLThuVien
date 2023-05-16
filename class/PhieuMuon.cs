@@ -1,4 +1,7 @@
-﻿using System;
+﻿/*
+ * Đồ Án Quản Lý Thư Viện 
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,7 +29,7 @@ namespace QLThuVien
             }
         }
         //properties
-        public int NgayPhaiTra
+        public DateTime NgayPhaiTra
         {
             get
             {
@@ -104,7 +107,7 @@ namespace QLThuVien
             }
         }
         //constructor day du
-        public PhieuMuon(int _soPhieuMuon, int _ngayPhaiTra, int _tinhTrangPhieuMuon, int _sTTPhieuMuon, string _maBanDoc, string _maSach, DateTime _ngayMuon)
+        public PhieuMuon(int _soPhieuMuon, DateTime _ngayPhaiTra, int _tinhTrangPhieuMuon, int _sTTPhieuMuon, string _maBanDoc, string _maSach, DateTime _ngayMuon)
         {
             this._soPhieuMuon = _soPhieuMuon;
             this._ngayPhaiTra = _ngayPhaiTra;

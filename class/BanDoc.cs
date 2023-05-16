@@ -1,4 +1,7 @@
-﻿using System;
+﻿/*
+ * Đồ Án Quản Lý Thư Viện 
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,7 +28,7 @@ namespace QLThuVien
             }
         }
         //properties
-        public int NgayDangkyBD
+        public DateTime NgayDangkyBD
         {
             get
             {
@@ -51,7 +54,7 @@ namespace QLThuVien
             }
         }
         //constructor day du
-        public BanDoc(string _maBanDoc, string _tenBanDoc, int _ngayDangkyBD)
+        public BanDoc(string _maBanDoc, string _tenBanDoc, DateTime _ngayDangkyBD)
         {
             this._maBanDoc = _maBanDoc;
             this._tenBanDoc = _tenBanDoc;

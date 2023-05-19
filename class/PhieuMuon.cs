@@ -9,7 +9,7 @@ namespace QLThuVien
     class PhieuMuon
     {
         //fields
-        private int _soPhieuMuon, _tinhTrangPhieuMuon, _sTTPhieuMuon;
+        private int _soPhieuMuon, _tinhTrangPhieuMuon;
         private string _maBanDoc, _maSach;
         private DateTime _ngayMuon, _ngayPhaiTra;
         //properties
@@ -52,19 +52,6 @@ namespace QLThuVien
             }
         }
         //properties
-        public int STTPhieuMuon
-        {
-            get
-            {
-                return _sTTPhieuMuon;
-            }
-
-            set
-            {
-                _sTTPhieuMuon = value;
-            }
-        }
-        //properties
         public string MaBanDoc
         {
             get
@@ -104,12 +91,11 @@ namespace QLThuVien
             }
         }
         //constructor day du
-        public PhieuMuon(int _soPhieuMuon, int _ngayPhaiTra, int _tinhTrangPhieuMuon, int _sTTPhieuMuon, string _maBanDoc, string _maSach, DateTime _ngayMuon)
+        public PhieuMuon(int _soPhieuMuon, string _maBanDoc, string _maSach, DateTime _ngayMuon, int _ngayPhaiTra, int _tinhTrangPhieuMuon)
         {
             this._soPhieuMuon = _soPhieuMuon;
             this._ngayPhaiTra = _ngayPhaiTra;
             this._tinhTrangPhieuMuon = _tinhTrangPhieuMuon;
-            this._sTTPhieuMuon = _sTTPhieuMuon;
             this._maBanDoc = _maBanDoc;
             this._maSach = _maSach;
             this._ngayMuon = _ngayMuon;
@@ -122,7 +108,7 @@ namespace QLThuVien
         //method
         public string toString()
         {
-            return $"{_sTTPhieuMuon,-10}{_maSach,-10}{_maBanDoc,-10}{_soPhieuMuon,-10}{_ngayMuon,-10}{_ngayPhaiTra,-10}{_tinhTrangPhieuMuon,-10}";
+            return $"{_soPhieuMuon,-10}{_maBanDoc,-10}{_maSach,-10}{_ngayMuon,-10}{_ngayPhaiTra,-10}{_tinhTrangPhieuMuon,-10}";
         }
     }
 }

@@ -130,7 +130,7 @@ namespace QLThuVien
             }
         }
         //constructor day du
-        public Sach(string _maSach, string _tenSach, string _tacGia, int _nhaXuatBan, int _tinhTrangSach, int _soTrang, int _giaBan, int _namPhatHanh, DateTime _ngayNhapKho)
+        public Sach(string _maSach, string _tenSach, string _tacGia, int _nhaXuatBan, int _giaBan, int _namPhatHanh, int _soTrang, DateTime _ngayNhapKho, int _tinhTrangSach)
         {
             this._maSach = _maSach;
             this._tenSach = _tenSach;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LinkedList
+namespace QLThuVien
 {
     internal class DanhSachAdmin
     {

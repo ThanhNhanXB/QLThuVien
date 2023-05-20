@@ -26,7 +26,7 @@ namespace QLThuVien
             }
         }
         //properties
-        public int NgayPhaiTra
+        public DateTime NgayPhaiTra
         {
             get
             {
@@ -91,7 +91,7 @@ namespace QLThuVien
             }
         }
         //constructor day du
-        public PhieuMuon(int _soPhieuMuon, string _maBanDoc, string _maSach, DateTime _ngayMuon, int _ngayPhaiTra, int _tinhTrangPhieuMuon)
+        public PhieuMuon(int _soPhieuMuon, string _maBanDoc, string _maSach, DateTime _ngayMuon, DateTime _ngayPhaiTra, int _tinhTrangPhieuMuon)
         {
             this._soPhieuMuon = _soPhieuMuon;
             this._ngayPhaiTra = _ngayPhaiTra;

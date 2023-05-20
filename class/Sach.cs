@@ -9,7 +9,7 @@ namespace QLThuVien
     class Sach
     {
         //fields
-        private string _maSach, _tenSach, _tacGia,_nhaXuatBan;
+        private string _maSach, _tenSach, _tacGia, _nhaXuatBan;
         private int _tinhTrangSach, _soTrang, _giaBan, _namPhatHanh;
         private DateTime _ngayNhapKho;
         //properties
@@ -52,7 +52,7 @@ namespace QLThuVien
             }
         }
         //properties
-        public int NhaXuatBan
+        public string NhaXuatBan
         {
             get
             {
@@ -130,7 +130,7 @@ namespace QLThuVien
             }
         }
         //constructor day du
-        public Sach(string _maSach, string _tenSach, string _tacGia, int _nhaXuatBan, int _giaBan, int _namPhatHanh, int _soTrang, DateTime _ngayNhapKho, int _tinhTrangSach)
+        public Sach(string _maSach, string _tenSach, string _tacGia, string _nhaXuatBan, int _giaBan, int _namPhatHanh, int _soTrang, DateTime _ngayNhapKho, int _tinhTrangSach)
         {
             this._maSach = _maSach;
             this._tenSach = _tenSach;
@@ -152,6 +152,5 @@ namespace QLThuVien
         {
             return $"{_maSach,-10}{_tenSach,-10}{_tacGia,-10}{_nhaXuatBan,-10}{_giaBan,-10}{_namPhatHanh,-10}{_soTrang,-10}{_ngayNhapKho,-10}{_tinhTrangSach,-10}";
         }
-
     }
 }

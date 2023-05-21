@@ -14,6 +14,12 @@ namespace QLThuVien
     {
         static void Main(string[] args)
         {
+            /*
+             * Chú ý dùng phím tiếng anh để debug chương trình  
+             * tiếng việt sau khi chọn menu sẽ đứng 
+             */ 
+
+
             //khai báo 
             bool dungChuongTrinh=false; 
             
@@ -53,7 +59,7 @@ namespace QLThuVien
             Console.ReadKey();
         }
         /// <summary>
-        /// Ham dang nhap 
+        /// Hàm đăng nhập  
         /// </summary>
         /// <returns></returns>
         static bool DangNhap()
@@ -88,7 +94,7 @@ namespace QLThuVien
             return false;
         }
         /// <summary>
-        /// kiem tra username, password 
+        ///Kiểm tra username và password 
         /// </summary>
         /// <param name="path"></param>
         /// <param name="user"></param>
@@ -119,7 +125,7 @@ namespace QLThuVien
         }
 
         /// <summary>
-        /// Chuc nang quan ly sach 
+        /// Chức năng quản lý sách 
         /// </summary>
         /// <returns></returns>
         static bool QuanLySach()
@@ -169,7 +175,7 @@ namespace QLThuVien
             }
         }
         /// <summary>
-        /// Chuc nang quan ly phieu muon 
+        /// Chức năng quản lý phiếu mượn 
         /// </summary>
         /// <returns></returns>
         static bool QuanLyPhieuMuon()

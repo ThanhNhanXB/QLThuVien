@@ -1,0 +1,15 @@
+D:\project\CTDL\QLThuVien\QLThuVien\QLThuVien\bin\Debug\net6.0\QLThuVien.exe
+D:\project\CTDL\QLThuVien\QLThuVien\QLThuVien\bin\Debug\net6.0\QLThuVien.deps.json
+D:\project\CTDL\QLThuVien\QLThuVien\QLThuVien\bin\Debug\net6.0\QLThuVien.runtimeconfig.json
+D:\project\CTDL\QLThuVien\QLThuVien\QLThuVien\bin\Debug\net6.0\QLThuVien.dll
+D:\project\CTDL\QLThuVien\QLThuVien\QLThuVien\bin\Debug\net6.0\QLThuVien.pdb
+D:\project\CTDL\QLThuVien\QLThuVien\QLThuVien\obj\Debug\net6.0\QLThuVien.csproj.AssemblyReference.cache
+D:\project\CTDL\QLThuVien\QLThuVien\QLThuVien\obj\Debug\net6.0\QLThuVien.GeneratedMSBuildEditorConfig.editorconfig
+D:\project\CTDL\QLThuVien\QLThuVien\QLThuVien\obj\Debug\net6.0\QLThuVien.AssemblyInfoInputs.cache
+D:\project\CTDL\QLThuVien\QLThuVien\QLThuVien\obj\Debug\net6.0\QLThuVien.AssemblyInfo.cs
+D:\project\CTDL\QLThuVien\QLThuVien\QLThuVien\obj\Debug\net6.0\QLThuVien.csproj.CoreCompileInputs.cache
+D:\project\CTDL\QLThuVien\QLThuVien\QLThuVien\obj\Debug\net6.0\QLThuVien.dll
+D:\project\CTDL\QLThuVien\QLThuVien\QLThuVien\obj\Debug\net6.0\refint\QLThuVien.dll
+D:\project\CTDL\QLThuVien\QLThuVien\QLThuVien\obj\Debug\net6.0\QLThuVien.pdb
+D:\project\CTDL\QLThuVien\QLThuVien\QLThuVien\obj\Debug\net6.0\QLThuVien.genruntimeconfig.cache
+D:\project\CTDL\QLThuVien\QLThuVien\QLThuVien\obj\Debug\net6.0\ref\QLThuVien.dll

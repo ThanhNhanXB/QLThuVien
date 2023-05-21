@@ -1,4 +1,0 @@
-GiaiDoan2: code 
-+code menu 
-+code quan ly sach 
-+code quan ly phieu muon

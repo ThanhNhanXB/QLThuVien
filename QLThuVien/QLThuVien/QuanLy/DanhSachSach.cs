@@ -40,12 +40,16 @@ namespace QLThuVien
         //methods
         public void HienThiDSSach()
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"{"MaSach",-10}{"TenSach",-10}{"TacGia",-10}{"NhaXuatBan",-10}{"GiaBan",-10}{"NamPhatHanh",-10}{"SoTrang",-10}{"NgayNhapKho",-10}{"TinhTrangSach",-10}");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("+----------+---------------+---------------+------------+----------+-------------+----------+----------+----------+"); 
+            Console.WriteLine($"|{"Mã Sách",-10}|{"Tên Sách",-15}|{"Tác Giả",-15}|{"Nhà Xuất Bản",-12}|{"Giá Bán",-10}|{"Năm Phát Hành",-11}|{"Số Trang",-10}|{"Ngày Nhập",-10}|{"Tình Trạng",-10}|");
             for(LinkedListNode<Sach> p = _l.First; p != null; p = p.Next)
-            {
-                Console.WriteLine(p.Value.toString());
+            {  
+            Console.WriteLine("+----------+---------------+---------------+------------+----------+-------------+----------+----------+----------+"); 
+                 Console.WriteLine(p.Value.toString());
             }   
+            Console.WriteLine("+----------+---------------+---------------+------------+----------+-------------+----------+----------+----------+");
+            Console.ResetColor(); 
         }
         //Ham ghi vào file
         public void Ghi(LinkedList<Sach> L, string path)
@@ -80,7 +84,6 @@ namespace QLThuVien
                         L.AddLast(sach);
                     }
                 }
-                Console.WriteLine("Doc file thanh cong");
             }
             catch (Exception ex)
             {

@@ -154,7 +154,7 @@ namespace QLThuVien
         //method
         public string toString()
         {
-            return $"{_maSach,-10}{_tenSach,-10}{_tacGia,-10}{_nhaXuatBan,-10}{_giaBan,-10}{_namPhatHanh,-10}{_soTrang,-10}{_ngayNhapKho,-10}{_tinhTrangSach,-10}";
+            return $"|{_maSach,-10}|{_tenSach,-15}|{_tacGia,-15}|{_nhaXuatBan,-12}|{_giaBan,-10}|{_namPhatHanh,-13}|{_soTrang,-10}|{_ngayNhapKho.ToString("dd/MM/yyyy"),-10}|{_tinhTrangSach,-10}|";
         }
     }
 }

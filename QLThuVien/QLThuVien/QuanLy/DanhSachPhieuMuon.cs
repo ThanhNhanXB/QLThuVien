@@ -38,12 +38,18 @@ namespace QLThuVien
         //methods
         public void HienThiDSPhieuMuon()
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"{"SoPhieuMuon",-10}{"MaBanDoc",-10}{"MaSach",-10}{"NgayMuon",-10}{"NgayPhaiTra",-10}{"TinhTrangPhieuMuon",-10}");
-            for(LinkedListNode<PhieuMuon> p = _l.First; p != null; p = p.Next)
+                
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            int strLength = 76; 
+            Console.WriteLine("+-------------+----------+----------+----------+-------------+-------------+".PadLeft(Console.WindowWidth/2+strLength/2));
+            Console.WriteLine($"|{"Số Phiếu Mượn",-10}|{"Mã Bạn Đọc",-10}|{"Mã Sách",-10}|{"Ngày Mượn",-10}|{"Ngày Phải Trả",-13}|{"Tình Trạng PM",-13}|".PadLeft(Console.WindowWidth / 2 + strLength / 2));
+            for (LinkedListNode<PhieuMuon> p = _l.First; p != null; p = p.Next)
             {
-                Console.WriteLine(p.Value.toString());
+                Console.WriteLine("+-------------+----------+----------+----------+-------------+-------------+".PadLeft(Console.WindowWidth / 2 + strLength / 2));
+                Console.WriteLine(p.Value.toString().PadLeft(Console.WindowWidth / 2 + strLength / 2));
             }
+            Console.WriteLine("+-------------+----------+----------+----------+-------------+-------------+".PadLeft(Console.WindowWidth / 2 + strLength / 2));
+            Console.ResetColor();
         }
 
         // Hàm ghi file
@@ -76,11 +82,10 @@ namespace QLThuVien
                     while (!sr.EndOfStream)
                     {
                         string[] t = sr.ReadLine().Split('#');
-                        PhieuMuon phieuMuon = new PhieuMuon(int.Parse(t[0]), t[1] ,t[2], DateTime.Parse(t[3]), DateTime.Parse(t[4]), int.Parse(t[5]));
+                        PhieuMuon phieuMuon = new PhieuMuon(int.Parse(t[0]), t[1], t[2], DateTime.Parse(t[3]), DateTime.Parse(t[4]), int.Parse(t[5]));
                         L.AddLast(phieuMuon);
                     }
                 }
-                Console.WriteLine("Doc file thanh cong");
             }
             catch (Exception ex)
             {

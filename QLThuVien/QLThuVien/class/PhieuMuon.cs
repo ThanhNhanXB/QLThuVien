@@ -111,7 +111,8 @@ namespace QLThuVien
         //method
         public string toString()
         {
-            return $"{_soPhieuMuon,-10}{_maBanDoc,-10}{_maSach,-10}{_ngayMuon,-10}{_ngayPhaiTra,-10}{_tinhTrangPhieuMuon,-10}";
+            return $"|{_soPhieuMuon,-13}|{_maBanDoc,-10}|{_maSach,-10}|{_ngayMuon.ToString("dd/MM/yyyy"),-10}|{_ngayPhaiTra.ToString("dd/MM/yyyy"),-13}|{_tinhTrangPhieuMuon,-13}|";
+
         }
     }
 }

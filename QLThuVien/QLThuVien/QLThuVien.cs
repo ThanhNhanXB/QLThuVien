@@ -18,10 +18,10 @@ namespace QLThuVien
 
 
             //khai báo 
-            const string pathSach = "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\data\\sach.txt"; 
-            const string pathPhieuMuon = "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\data\\phieumuon.txt"; 
-            const string pathAddmin = "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\data\\admin.txt"; 
-            const string pathBanDoc =""; 
+            const string pathSach = "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\data\\sach.txt";
+            const string pathPhieuMuon = "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\data\\phieumuon.txt";
+            const string pathAddmin = "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\data\\admin.txt";
+            const string pathBanDoc = "";
 
 
 
@@ -78,7 +78,7 @@ namespace QLThuVien
             string user = "###", pass = "###";
             bool check = false;
             bool checkString = false;
-            Regex rangBuoc = new Regex("[a-zA-Z0-9]");
+            Regex rangBuoc = new Regex("^[a-zA-Z0-9]+$");
             ConsoleKeyInfo maHoa = new ConsoleKeyInfo();
 
             GiaoDien.DangNhap();
@@ -131,20 +131,25 @@ namespace QLThuVien
                         Console.ResetColor();
                         Console.WriteLine("Username: ".PadLeft(Console.WindowWidth / 3 + 8) + user);
                     }
-                    pass = ""; 
+                    pass = "";
                     Console.Write("Password: ".PadLeft(Console.WindowWidth / 3 + 8));
-                    
+
                     //Mã hóa mật khẩu thành dấu *
                     do
                     {
                         maHoa = new ConsoleKeyInfo();
                         maHoa = Console.ReadKey(true);
-                        if(maHoa.Key != ConsoleKey.Enter)
+                        if (char.IsLetterOrDigit(maHoa.KeyChar))
                         {
-
-                        pass += maHoa.KeyChar;
-                        Console.Write('*');
+                            pass += maHoa.KeyChar;
+                            Console.Write('*');
                         }
+                        if (maHoa.Key == ConsoleKey.Backspace && pass.Length>=0)
+                        {
+                            pass = pass.Remove(pass.Length - 1); 
+                            Console.Write("\b \b");
+                        }
+
                     } while (maHoa.Key != ConsoleKey.Enter);
 
                 } while (pass == "");
@@ -273,8 +278,8 @@ namespace QLThuVien
                         //dsPhieuMuon.Doc(@"..\..\..\..\data\phieumuon.txt");
                         dsPhieuMuon.Doc(path);
                         dsPhieuMuon.HienThiDSPhieuMuon();
-                        Console.Write("       Ấn Phím bất Kỳ Để Trở Về     \n".PadLeft(Console.WindowWidth/2+36/2));
-                        Console.ReadKey(true); 
+                        Console.Write("       Ấn Phím bất Kỳ Để Trở Về     \n".PadLeft(Console.WindowWidth / 2 + 36 / 2));
+                        Console.ReadKey(true);
                         Console.Clear();
                         break;
                     //Mượn sách 

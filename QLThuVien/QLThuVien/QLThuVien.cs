@@ -286,13 +286,13 @@ namespace QLThuVien
                     case '2':
                         Console.Clear();
                         GiaoDien.MuonSach();
-
+                        MuonSach(path);
                         break;
                     //Trả Sách 
                     case '3':
                         Console.Clear();
                         GiaoDien.TraSach();
-
+                        TraSach(path);
                         break;
                     //Trở về 
                     case '4':
@@ -312,5 +312,442 @@ namespace QLThuVien
                 }
             }
         }
+        /// <summary>
+        /// hàm mượn sách
+        /// </summary>
+        /// <param name="path"></param>
+        static void MuonSach(string path)
+        {
+            LinkedList<PhieuMuon> L = new LinkedList<PhieuMuon>();
+            // Đọc dữ liệu từ file để tạo số thứ tự phiếu mượn mới
+            int soThuTuPhieuMuon = LaySoThuTuPhieuMuon(path);
+
+            // Nhập thông tin mượn sách từ người dùng
+            string maBanDoc;
+            do
+            {
+                //Console.Clear();
+                //GiaoDien.MenuPhieuMuon();
+                Console.Write("Nhập mã bạn đọc: ");
+                maBanDoc = Console.ReadLine();
+
+                if (!KiemTraMaBanDocTonTai(maBanDoc))
+                {
+                    Console.WriteLine("Mã bạn đọc không tồn tại. Vui lòng nhập lại!");
+                }
+            } while (!KiemTraMaBanDocTonTai(maBanDoc));
+
+            Console.Write("Nhập mã sách: ");
+            string maSach = Console.ReadLine();
+
+            // Kiểm tra tình trạng sách
+            if (KiemTraSach(maSach))
+            {
+                // Tiếp tục xử lý mượn sách
+                DateTime ngayMuon = DateTime.Now;
+                DateTime ngayPhaiTra = ngayMuon.AddDays(7);
+                int tinhTrangPhieuMuon = soThuTuPhieuMuon; // Cập nhật tình trạng sách thành số thứ tự phiếu mượn
+
+                // Tạo đối tượng Phiếu Mượn mới
+                PhieuMuon phieuMuon = new PhieuMuon(soThuTuPhieuMuon, maBanDoc, maSach, ngayMuon, ngayPhaiTra, tinhTrangPhieuMuon);
+
+                // Đọc danh sách phiếu mượn từ file
+                L = DocDanhSachPhieuMuon();
+
+                // Thêm phiếu mượn mới vào danh sách
+                L.AddLast(phieuMuon);
+
+                // Ghi danh sách phiếu mượn sau khi cập nhật vào file
+                GhiPhieuMuon(path, L);
+
+                // Cập nhật tình trạng phiếu mượn và tình trạng sách
+                CapNhatTinhTrangPhieuMuon(path, soThuTuPhieuMuon);
+                CapNhatTinhTrangSach(maSach, tinhTrangPhieuMuon);
+
+                Console.WriteLine("Mượn sách thành công!");
+            }
+        }
+        /// <summary>
+        /// hàm lấy số thứ tự phiếu mượn mới
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        static int LaySoThuTuPhieuMuon(string path)
+        {
+            int soThuTuPhieuMuon = 0;
+            try
+            {
+                if (File.Exists(pathPhieuMuon))
+                {
+                    string[] lines = File.ReadAllLines(pathPhieuMuon);
+                    if (lines.Length > 0)
+                    {
+                        string lastLine = lines[lines.Length - 1];
+                        string[] lastLineParts = lastLine.Split('#');
+                        if (lastLineParts.Length >= 6 && int.TryParse(lastLineParts[0], out soThuTuPhieuMuon))
+                        {
+                            // Tăng số thứ tự phiếu mượn lên 1 để tạo số phiếu mượn mới
+                            soThuTuPhieuMuon++;
+                        }
+                        else
+                        {
+                            throw new Exception("Lỗi đọc dữ liệu phiếu mượn từ file.");
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception("Không thể đọc file.");
+            }
+
+            return soThuTuPhieuMuon;
+        }
+        /// <summary>
+        /// hàm ghi thông tin Phiếu Mượn vào file
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="phieuMuon"></param>
+        static void GhiPhieuMuon(string path, LinkedList<PhieuMuon> danhSachPhieuMuon)
+        {
+            try
+            {
+                using (StreamWriter sw = new StreamWriter(pathPhieuMuon, false)) // Sử dụng tham số false để ghi đè nội dung file
+                {
+                    foreach (PhieuMuon phieuMuon in danhSachPhieuMuon)
+                    {
+                        string line = $"{phieuMuon.SoPhieuMuon}#{phieuMuon.MaBanDoc}#{phieuMuon.MaSach}#{phieuMuon.NgayMuon}#{phieuMuon.NgayPhaiTra}#{phieuMuon.TinhTrangPhieuMuon}";
+                        sw.WriteLine(line);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception("Không thể ghi file danh sách phiếu mượn.");
+            }
+        }
+
+        /// <summary>
+        /// hàm cập nhật tình trạng phiếu mượn sau khi mượn
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="soThuTuPhieuMuon"></param>
+        static void CapNhatTinhTrangPhieuMuon(string path, int soThuTuPhieuMuon)
+        {
+            try
+            {
+                string[] lines = File.ReadAllLines(pathPhieuMuon);
+                if (lines.Length > 0)
+                {
+                    string lastLine = lines[lines.Length - 1];
+                    string[] lastLineParts = lastLine.Split('#');
+                    if (lastLineParts.Length >= 6)
+                    {
+                        lastLineParts[5] = "1"; // Cập nhật tình trạng thành 1
+                        lines[lines.Length - 1] = string.Join("#", lastLineParts);
+                        File.WriteAllLines(pathPhieuMuon, lines);
+                    }
+                    else
+                    {
+                        throw new Exception("Lỗi đọc dữ liệu phiếu mượn từ file.");
+                    }
+                }
+                else
+                {
+                    throw new Exception("File phiếu mượn không có dữ liệu.");
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception("Không thể cập nhật tình trạng phiếu mượn.");
+            }
+        }
+
+
+        /// <summary>
+        /// hàm kiểm tra mã bạn đọc đã tồn tại trong file hay chưa
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="maBanDoc"></param>
+        /// <returns></returns>
+        static bool KiemTraMaBanDocTonTai(string maBanDoc)
+        {
+            try
+            {
+                using (StreamReader sr = new StreamReader(pathBanDoc))
+                {
+                    while (!sr.EndOfStream)
+                    {
+                        string[] line = sr.ReadLine().Split('#');
+                        if (line.Length >= 2 && line[0] == maBanDoc)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception("Không thể mở file.");
+            }
+            return false;
+        }
+        /// <summary>
+        /// hàm kiểm tra sách có tồn tại hay không qua mã và sách có đang được mượn không
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="maSach"></param>
+        /// <returns></returns>
+        static bool KiemTraSach(string maSach)
+        {
+            try
+            {
+                string[] lines = File.ReadAllLines(pathSach);
+                string[] phieuMuonLines = File.ReadAllLines(pathPhieuMuon);
+
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    string[] line = lines[i].Split('#');
+                    if (line.Length >= 2 && line[0] == maSach)
+                    {
+                        int tinhTrangPhieuMuon;
+                        if (int.TryParse(line[8], out tinhTrangPhieuMuon))
+                        {
+                            if (tinhTrangPhieuMuon != 0)
+                            {
+                                Console.Clear();
+                                Console.WriteLine("Sách có mã {0} đang được mượn. Vui lòng nhập lại mã sách khác.", maSach);
+                                return false;
+                            }
+                            else
+                            {
+                                if (phieuMuonLines.Length > 0)
+                                {
+                                    string[] phieuMuonLine = phieuMuonLines[0].Split('#');
+                                    int soThuTuPhieuMuon;
+                                    if (int.TryParse(phieuMuonLine[0], out soThuTuPhieuMuon))
+                                    {
+                                        // Cập nhật tình trạng sách
+                                        line[8] = soThuTuPhieuMuon.ToString(); // Sửa giá trị tình trạng sách thành số thứ tự phiếu mượn
+                                        lines[i] = string.Join("#", line);
+                                        File.WriteAllLines(pathSach, lines);
+
+                                        return true;
+                                    }
+                                    else
+                                    {
+                                        throw new Exception("Lỗi đọc số thứ tự phiếu mượn từ file.");
+                                    }
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("File phiếu mượn không có dữ liệu.");
+                                    return false;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception("Lỗi đọc tình trạng sách từ file.");
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                Console.Clear();
+                Console.WriteLine("Không thể mở file.");
+                return false;
+            }
+
+            Console.Clear();
+            Console.WriteLine("Sách có mã {0} không tồn tại. Vui lòng nhập lại mã sách khác.", maSach);
+            return false;
+        }
+        /// <summary>
+        /// hàm kiểm tra mã sách có tồn tại hay không
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="maSach"></param>
+        /// <returns></returns>
+        static bool KiemTraMaSachTontai(string maSach)
+        {
+            try
+            {
+                using (StreamReader sr = new StreamReader(pathSach))
+                {
+                    while (!sr.EndOfStream)
+                    {
+                        string[] line = sr.ReadLine().Split('#');
+                        if (line.Length >= 1 && line[0] == maSach)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception("Không thể mở file.");
+            }
+            return false;
+        }
+        /// <summary>
+        /// hàm trả sách
+        /// </summary>
+        /// <param name="path"></param>
+        static void TraSach(string path)
+        {
+            LinkedList<PhieuMuon> L = new LinkedList<PhieuMuon>();
+            string maSach;
+            do
+            {
+                Console.Write("Nhập mã sách: ");
+                maSach = Console.ReadLine();
+                if (!KiemTraMaSachTontai(maSach))
+                {
+                    Console.Clear();
+                    GiaoDien.TraSach();
+                    Console.WriteLine("Mã sách không tồn tại. Vui lòng nhập lại!");
+                }
+            } while (!KiemTraMaSachTontai(maSach));
+
+            // Đọc dữ liệu từ file và tạo danh sách liên kết
+            L = DocDanhSachPhieuMuon();
+
+            // Cập nhật tình trạng sách và phiếu mượn nếu tìm thấy mã sách
+            bool daTraSach = false;
+            bool tatCaDaTra = true; // Kiểm tra tất cả các phiếu mượn có tình trạng bằng 0 hay không
+            int soPhieuMuonChuaTra = 0; // Số lượng phiếu mượn chưa trả
+            LinkedListNode<PhieuMuon> currentNode = L.First;
+            while (currentNode != null)
+            {
+                if (currentNode.Value.MaSach == maSach)
+                {
+                    // Cập nhật tình trạng sách
+                    CapNhatTinhTrangSach(currentNode.Value.MaSach, 0);
+
+                    // Cập nhật tình trạng phiếu mượn thành 0 nếu phiếu chưa được trả
+                    if (currentNode.Value.TinhTrangPhieuMuon == 1)
+                    {
+                        currentNode.Value.TinhTrangPhieuMuon = 0;
+                        daTraSach = true;
+                    }
+                }
+
+                if (currentNode.Value.TinhTrangPhieuMuon == 1)
+                {
+                    tatCaDaTra = false;
+                    soPhieuMuonChuaTra++;
+                }
+
+                currentNode = currentNode.Next;
+            }
+
+            if (daTraSach)
+            {
+                // Ghi lại danh sách phiếu mượn sau khi cập nhật vào file
+                GhiPhieuMuon(pathPhieuMuon, L);
+
+                Console.WriteLine("Đã trả sách thành công.");
+
+                if (tatCaDaTra)
+                {
+                    Console.WriteLine("Tất cả các phiếu mượn đã được trả.");
+                }
+                else
+                {
+                    Console.WriteLine($"Còn {soPhieuMuonChuaTra} phiếu mượn chưa được trả.");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Tất cả các phiếu có mã {maSach} đã được trả.");
+            }
+        }
+
+
+        /// <summary>
+        /// hàm đọc danh sách phiếu mượn 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        static LinkedList<PhieuMuon> DocDanhSachPhieuMuon()
+        {
+            LinkedList<PhieuMuon> danhSachPhieuMuon = new LinkedList<PhieuMuon>();
+
+            // Đọc dữ liệu từ file và thêm vào danh sách liên kết
+            try
+            {
+                if (File.Exists(pathPhieuMuon))
+                {
+                    string[] lines = File.ReadAllLines(pathPhieuMuon);
+                    foreach (string line in lines)
+                    {
+                        string[] parts = line.Split('#');
+                        if (parts.Length >= 6)
+                        {
+                            int soPhieuMuon, tinhTrangPhieuMuon;
+                            DateTime ngayMuon, ngayPhaiTra;
+                            if (int.TryParse(parts[0], out soPhieuMuon) &&
+                                DateTime.TryParse(parts[3], out ngayMuon) &&
+                                DateTime.TryParse(parts[4], out ngayPhaiTra) &&
+                                int.TryParse(parts[5], out tinhTrangPhieuMuon))
+                            {
+                                PhieuMuon phieuMuon = new PhieuMuon(soPhieuMuon, parts[1], parts[2], ngayMuon, ngayPhaiTra, tinhTrangPhieuMuon);
+                                danhSachPhieuMuon.AddLast(phieuMuon);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+
+                    throw new Exception("File danh sách phiếu mượn không tồn tại.");
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception("Không thể đọc file danh sách phiếu mượn.");
+            }
+
+            return danhSachPhieuMuon;
+        }
+        /// <summary>
+        /// hàm cập nhật tình trạng sách sau khi mượn và trả
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="maSach"></param>
+        /// <param name="soThuTuPhieuMuon"></param>
+        static void CapNhatTinhTrangSach(string maSach, int tinhTrang)
+        {
+            try
+            {
+                string[] lines = File.ReadAllLines(pathSach);
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    string[] line = lines[i].Split('#');
+                    if (line.Length >= 9 && line[0] == maSach)
+                    {
+                        line[8] = tinhTrang.ToString();
+                        lines[i] = string.Join("#", line);
+                        File.WriteAllLines(pathSach, lines);
+                        return;
+                    }
+                }
+                throw new Exception("Không tìm thấy sách có mã " + maSach);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Không thể cập nhật tình trạng sách.");
+            }
+        }
+        /// <summary>
+        /// đường link dẫn tới file
+        /// </summary>
+        static string pathSach = @"D:\projeck_CTDL_giai_thuat\sach.txt";
+        static string pathPhieuMuon = @"D:\projeck_CTDL_giai_thuat\phieumuon.txt";
+        static string pathBanDoc = @"D:\projeck_CTDL_giai_thuat\bandoc.txt";
     }
 }

@@ -4,8 +4,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace QLThuVien
@@ -155,6 +157,270 @@ namespace QLThuVien
         public string toString()
         {
             return $"|{_maSach,-10}|{_tenSach,-15}|{_tacGia,-15}|{_nhaXuatBan,-12}|{_giaBan,-10}|{_namPhatHanh,-13}|{_soTrang,-10}|{_ngayNhapKho.ToString("dd/MM/yyyy"),-10}|{_tinhTrangSach,-10}|";
+        }
+        public string CapNhatDSSach()
+        {
+            return $"{_maSach}#{_tenSach}#{_tacGia}#{_nhaXuatBan}#{_giaBan}#{_namPhatHanh}#{_soTrang}#{_ngayNhapKho.ToString("dd/MM/yyyy")}#{_tinhTrangSach}";
+        }
+
+        public void NhapThemSach()
+        {
+
+            Regex rangBuoc = new Regex("^[a-zA-Z0-9 ]+$");
+            //Ràng buộc khi nhập mã sách
+
+            bool ketQua = true;
+            string filePath = @"D:\Project\CTDL\QLThuVien\QLThuVien\QLThuVien\data\sach.txt";
+            while (true)
+            {
+                do
+                {
+                    if (ketQua == false)
+                    {
+                        Console.Clear();
+                        GiaoDien.ThemSach();
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("       Vui Lòng Điền Thông Tin\n       ".PadLeft(Console.WindowWidth / 2 + 36 / 2));
+                        Console.ResetColor();
+                        ketQua = true;
+                    }
+                    Console.Write("Nhập mã sách: ".PadLeft(Console.WindowWidth / 3 + 8));
+                    _maSach = Console.ReadLine();
+                    if (!rangBuoc.IsMatch(_maSach))
+                    {
+                        ketQua = false;
+                    }
+
+                } while (!rangBuoc.IsMatch(_maSach));
+                // Kiểm tra mã sách đã tồn tại trong file hay chưa
+                if (File.ReadAllText(filePath).Contains(_maSach))
+                {
+                    Console.Clear();
+                    GiaoDien.ThemSach();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("       Mã sách đã tồn tại. Vui lòng nhập lại!\n       ".PadLeft(Console.WindowWidth / 2 + 52 / 2));
+                    Console.ResetColor();
+                }
+                else
+                {
+                    // Thêm sách vào file
+                    using (StreamWriter writer = File.AppendText(filePath))
+                    {
+                        writer.WriteLine(_maSach);
+                    }
+                    break;
+                }
+            }
+
+
+
+            //Ràng buộc khi nhập tên sách
+            ketQua = true;
+            do
+            {
+                if (ketQua == false)
+                {
+                    Console.Clear();
+                    GiaoDien.ThemSach();
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.WriteLine("       Vui Lòng Điền Thông Tin\n       ".PadLeft(Console.WindowWidth / 2 + 36 / 2));
+                    Console.ResetColor();
+                    Console.WriteLine("Mã sách: ".PadLeft(Console.WindowWidth / 3 + 8) + _maSach);
+                    ketQua = true;
+                }
+                Console.Write("Nhập tên sách: ".PadLeft(Console.WindowWidth / 3 + 8));
+                _tenSach = Console.ReadLine();
+                if (!rangBuoc.IsMatch(_tenSach))
+                {
+                    ketQua = false;
+                }
+
+            } while (!rangBuoc.IsMatch(_tenSach));
+
+
+
+            //Ràng buộc khi nhập tác giả
+            ketQua = true;
+            do
+            {
+                if (ketQua == false)
+                {
+                    Console.Clear();
+                    GiaoDien.ThemSach();
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.WriteLine("       Vui Lòng Điền Thông Tin\n      ".PadLeft(Console.WindowWidth / 2 + 36 / 2));
+                    Console.ResetColor();
+                    Console.WriteLine("Mã sách: ".PadLeft(Console.WindowWidth / 3 + 8) + _maSach);
+                    Console.WriteLine("Tên sách: ".PadLeft(Console.WindowWidth / 3 + 8) + _tenSach);
+                    ketQua = true;
+                }
+                Console.Write("Nhập tác giả: ".PadLeft(Console.WindowWidth / 3 + 8));
+                _tacGia = Console.ReadLine();
+                if (!rangBuoc.IsMatch(_tacGia))
+                {
+                    ketQua = false;
+                }
+
+            } while (!rangBuoc.IsMatch(_tacGia));
+
+
+
+            // Ràng buộc khi nhập tác giả
+            ketQua = true;
+            do
+            {
+                if (ketQua == false)
+                {
+                    Console.Clear();
+                    GiaoDien.ThemSach();
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.WriteLine("       Vui Lòng Điền Thông Tin\n      ".PadLeft(Console.WindowWidth / 2 + 36 / 2));
+                    Console.ResetColor();
+                    Console.WriteLine("Mã sách: ".PadLeft(Console.WindowWidth / 3 + 8) + _maSach);
+                    Console.WriteLine("Tên sách: ".PadLeft(Console.WindowWidth / 3 + 8) + _tenSach);
+                    Console.WriteLine("Tác giả: ".PadLeft(Console.WindowWidth / 3 + 8) + _tacGia);
+                    ketQua = true;
+                }
+                Console.Write("Nhập nhà xuất bản: ".PadLeft(Console.WindowWidth / 3 + 8));
+                _nhaXuatBan = Console.ReadLine();
+                if (!rangBuoc.IsMatch(_nhaXuatBan))
+                {
+                    ketQua = false;
+                }
+
+            } while (!rangBuoc.IsMatch(_nhaXuatBan));
+            
+              
+
+            //Ràng buộc khi nhập giá bán
+            bool isValid = false;
+
+            while (!isValid)
+            {
+                Console.Write("Nhập giá bán: ".PadLeft(Console.WindowWidth / 3 + 8));
+                string input = Console.ReadLine();
+
+                isValid = int.TryParse(input, out _giaBan);
+
+                if (!isValid)
+                {
+                    Console.Clear();
+                    GiaoDien.ThemSach();
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("        Số nhập vào không hợp lệ. Vui lòng nhập lại!\n      ".PadLeft(Console.WindowWidth / 2 + 58 / 2));
+                    Console.ResetColor();
+                    Console.WriteLine("Mã sách: ".PadLeft(Console.WindowWidth / 3 + 8) + _maSach);
+                    Console.WriteLine("Tên sách: ".PadLeft(Console.WindowWidth / 3 + 8) + _tenSach);
+                    Console.WriteLine("Tác giả: ".PadLeft(Console.WindowWidth / 3 + 8) + _tacGia);
+                    Console.Write("Nhà xuất bản: ".PadLeft(Console.WindowWidth / 3 + 8) + _nhaXuatBan);
+                }
+            }
+
+            //Ràng buộc khi nhập năm phát hành
+            isValid = false;
+            while (!isValid)
+            {
+                Console.Write("Nhập năm phát hành: ".PadLeft(Console.WindowWidth / 3 + 8));
+                string input = Console.ReadLine();
+
+                isValid = int.TryParse(input, out _namPhatHanh);
+
+                if (!isValid)
+                {
+                    Console.Clear();
+                    GiaoDien.ThemSach();
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("        Số nhập vào không hợp lệ. Vui lòng nhập lại!\n      ".PadLeft(Console.WindowWidth / 2 + 58 / 2));
+                    Console.ResetColor();
+                    Console.WriteLine("Mã sách: ".PadLeft(Console.WindowWidth / 3 + 8) + _maSach);
+                    Console.WriteLine("Tên sách: ".PadLeft(Console.WindowWidth / 3 + 8) + _tenSach);
+                    Console.WriteLine("Tác giả: ".PadLeft(Console.WindowWidth / 3 + 8) + _tacGia);
+                    Console.Write("Nhà xuất bản: ".PadLeft(Console.WindowWidth / 3 + 8) + _nhaXuatBan);
+                    Console.Write("Giá bán: ".PadLeft(Console.WindowWidth / 3 + 8) + _giaBan);
+                }
+            }
+
+            //Ràng buộc khi số trang
+            isValid = false;
+            while (!isValid)
+            {
+                Console.Write("Nhập số trang: ".PadLeft(Console.WindowWidth / 3 + 8));
+                string input = Console.ReadLine();
+
+                isValid = int.TryParse(input, out _soTrang);
+
+                if (!isValid)
+                {
+                    Console.Clear();
+                    GiaoDien.ThemSach();
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("        Số nhập vào không hợp lệ. Vui lòng nhập lại!\n      ".PadLeft(Console.WindowWidth / 2 + 58 / 2));
+                    Console.ResetColor();
+                    Console.WriteLine("Mã sách: ".PadLeft(Console.WindowWidth / 3 + 8) + _maSach);
+                    Console.WriteLine("Tên sách: ".PadLeft(Console.WindowWidth / 3 + 8) + _tenSach);
+                    Console.WriteLine("Tác giả: ".PadLeft(Console.WindowWidth / 3 + 8) + _tacGia);
+                    Console.Write("Nhà xuất bản: ".PadLeft(Console.WindowWidth / 3 + 8) + _nhaXuatBan);
+                    Console.Write("Giá bán: ".PadLeft(Console.WindowWidth / 3 + 8) + _giaBan);
+                    Console.Write("Năm phát hành: ".PadLeft(Console.WindowWidth / 3 + 8) + _namPhatHanh);
+                }
+            }
+
+            //Ràng buộc khi nhập ngày nhập khi kiểu DateTime
+            bool isValidDate = false;
+
+            while (!isValidDate)
+            {
+                Console.Write("\nNhập ngày nhập: ".PadLeft(Console.WindowWidth / 3 + 8));
+                string input = Console.ReadLine();
+
+                if (DateTime.TryParse(input, out _ngayNhapKho))
+                {
+                    isValidDate = true;
+                }
+                else
+                {
+                    Console.Clear();
+                    GiaoDien.ThemSach();
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("       Ngày tháng không hợp lệ. Vui lòng nhập lại.!\n      ".PadLeft(Console.WindowWidth / 2 + 56 / 2));
+                    Console.ResetColor();
+                    Console.WriteLine("Mã sách: ".PadLeft(Console.WindowWidth / 3 + 8) + _maSach);
+                    Console.WriteLine("Tên sách: ".PadLeft(Console.WindowWidth / 3 + 8) + _tenSach);
+                    Console.WriteLine("Tác giả: ".PadLeft(Console.WindowWidth / 3 + 8) + _tacGia);
+                    Console.Write("Nhà xuất bản: ".PadLeft(Console.WindowWidth / 3 + 8) + _nhaXuatBan);
+                    Console.Write("Giá bán: ".PadLeft(Console.WindowWidth / 3 + 8) + _giaBan);
+                    Console.Write("Năm phát hành: ".PadLeft(Console.WindowWidth / 3 + 8) + _namPhatHanh);
+                    Console.Write("Số trang: ".PadLeft(Console.WindowWidth / 3 + 8) + _soTrang);
+                }
+            }
+
+
+            //Ràng buộc khi nhập tình trạng sách
+            isValid = false;
+            while (!isValid)
+            {
+                Console.Write("Nhập tình trạng (0 hoặc 1): ".PadLeft(Console.WindowWidth / 3 + 8));
+                string input = Console.ReadLine();
+
+                isValid = int.TryParse(input, out _tinhTrangSach) && (_tinhTrangSach == 0 || _tinhTrangSach == 1);
+
+                if (!isValid)
+                {
+                    Console.Clear();
+                    GiaoDien.ThemSach();
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("        Số nhập vào không hợp lệ. Vui lòng nhập lại!\n      ".PadLeft(Console.WindowWidth / 2 + 58 / 2));
+                    Console.ResetColor();
+                    Console.WriteLine("Mã sách: ".PadLeft(Console.WindowWidth / 3 + 8) + _maSach);
+                    Console.WriteLine("Tên sách: ".PadLeft(Console.WindowWidth / 3 + 8) + _tenSach);
+                    Console.WriteLine("Tác giả: ".PadLeft(Console.WindowWidth / 3 + 8) + _tacGia);
+                    Console.Write("Nhà xuất bản: ".PadLeft(Console.WindowWidth / 3 + 8) + _nhaXuatBan);
+                    Console.Write("Giá bán: ".PadLeft(Console.WindowWidth / 3 + 8) + _giaBan);
+                    Console.Write("Năm phát hành: ".PadLeft(Console.WindowWidth / 3 + 8) + _namPhatHanh);
+                    Console.Write("Ngày nhập kho: ".PadLeft(Console.WindowWidth / 3 + 8) + _ngayNhapKho.ToString("dd/MM/yyyy"));
+                }
+            }
+
         }
     }
 }

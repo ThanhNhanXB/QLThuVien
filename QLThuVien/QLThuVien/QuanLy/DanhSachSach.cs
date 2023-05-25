@@ -52,16 +52,13 @@ namespace QLThuVien
             Console.ResetColor(); 
         }
         //Ham ghi vào file
-        public void Ghi(LinkedList<Sach> L, string path)
+        public void Ghi(Sach L, string path)
         {
             try
             {
-                using (StreamWriter sw = new StreamWriter(path))
+                using (StreamWriter sw = new StreamWriter(path, true))
                 {
-                    for (LinkedListNode<Sach> p = L.First; p != null; p = p.Next)
-                    {
-                        sw.WriteLine(p.Value);
-                    }
+                    sw.WriteLine(L.CapNhatDSSach());
                 }
             }
             catch (Exception ex)
@@ -89,6 +86,17 @@ namespace QLThuVien
             {
                 Console.WriteLine("Mo file that bai!!!");
             }
+        }
+        public LinkedListNode<Sach> FindMaSach(string maSach)
+        {
+            for (LinkedListNode<Sach> p = L.First; p != null; p = p.Next)
+            {
+                if (p.Value.MaSach == maSach)
+                {
+                    return p;
+                }
+            }
+            return null;
         }
 
     }

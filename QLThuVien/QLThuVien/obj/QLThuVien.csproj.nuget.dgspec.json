@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\QLThuVien.csproj": {}
+    "E:\\Project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\QLThuVien.csproj": {}
   },
   "projects": {
-    "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\QLThuVien.csproj": {
+    "E:\\Project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\QLThuVien.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\QLThuVien.csproj",
+        "projectUniqueName": "E:\\Project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\QLThuVien.csproj",
         "projectName": "QLThuVien",
-        "projectPath": "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\QLThuVien.csproj",
-        "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
-        "outputPath": "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\obj\\",
+        "projectPath": "E:\\Project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\QLThuVien.csproj",
+        "packagesPath": "C:\\Users\\Windows\\.nuget\\packages\\",
+        "outputPath": "E:\\Project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ACER\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Windows\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

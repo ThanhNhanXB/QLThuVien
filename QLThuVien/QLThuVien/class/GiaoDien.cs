@@ -151,6 +151,7 @@ namespace QLThuVien
             str += "|                                  |\n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
             str += "------------------------------------\n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
             str += "------------ Thêm Sách -------------\n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
+            str += "-- KHÔNG NHẬP CÁC  KÍ TỰ ĐẶC BIỆT --\n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
             Console.WriteLine(str);
             Console.ResetColor();
 

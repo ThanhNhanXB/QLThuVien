@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.IO;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
+
 namespace QLThuVien
 {
     class QLThuVien
@@ -227,12 +229,67 @@ namespace QLThuVien
                     case '2':
                         Console.Clear();
                         GiaoDien.ThemSach();
+                        // khai báo biến 
+                        DanhSachSach sach = new DanhSachSach();
+                        LinkedList<Sach> L = new LinkedList<Sach>();
+                        Sach s = new Sach();
+                        // Đường dẫn tới tệp tin "sach.txt"
+                        string filePath = @"D:\Project\CTDL\QLThuVien\QLThuVien\QLThuVien\data\sach.txt";
 
+                        // Nhập thông tin sách mới từ người dùng
+                        s.NhapThemSach();
+
+                        LinkedListNode<Sach> ketQua = sach.FindMaSach(s.MaSach);
+                        // Kiểm tra nếu sách đã tồn tại trong tệp tin
+                        if (ketQua != null) 
+                        {
+                            Console.WriteLine("\n     Sách đã tồn tại trong tệp!     \n".PadLeft(Console.WindowWidth / 2 + 36 / 2));
+                        }
+                        else
+                        {
+                            // Mở tệp tin để ghi thêm sách mới
+                            sach.Ghi(s, filePath);
+                            Console.WriteLine("\n       Thêm sách thành công!        \n".PadLeft(Console.WindowWidth / 2 + 36 / 2));
+                        }
                         break;
                     //Xóa sách 
                     case '3':
                         Console.Clear();
                         GiaoDien.XoaSach();
+                        string pathBook = @"D:\Project\CTDL\QLThuVien\QLThuVien\QLThuVien\data\sach.txt";
+                       
+                        Console.Write("Nhập mã sách cần xóa: ".PadLeft(Console.WindowWidth / 3 + 8));
+                        string maSach = Console.ReadLine();
+
+                        // Đọc tất cả các dòng từ tệp và lưu vào danh sách
+                        List<string> lines = new List<string>(File.ReadAllLines(pathBook));
+
+                        bool bookDeleted = false;
+
+                        // Tìm và xóa sách dựa trên mã sách
+                        for (int i = 0; i < lines.Count; i++)
+                        {
+                            string[] bookData = lines[i].Split('#');
+
+                            // Kiểm tra mã sách trong dữ liệu sách
+                            if (bookData.Length > 0 && bookData[0] == maSach)
+                            {
+                                lines.RemoveAt(i);
+                                bookDeleted = true;
+                                break;
+                            }
+                        }
+
+                        if (bookDeleted)
+                        {
+                            // Ghi lại danh sách sách sau khi xóa
+                            File.WriteAllLines(pathBook, lines);
+                            Console.WriteLine("Xóa sách thành công!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Không tìm thấy sách với mã sách đã nhập!");
+                        }
 
                         break;
                     //trở về 

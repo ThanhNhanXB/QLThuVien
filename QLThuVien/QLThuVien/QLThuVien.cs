@@ -18,10 +18,10 @@ namespace QLThuVien
 
 
             //khai báo 
-            const string pathSach = "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\data\\sach.txt";
-            const string pathPhieuMuon = "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\data\\phieumuon.txt";
-            const string pathAddmin = "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\data\\admin.txt";
-            const string pathBanDoc = "";
+            //const string pathSach = "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\data\\sach.txt";
+            //const string pathPhieuMuon = "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\data\\phieumuon.txt";
+            //const string pathAddmin = "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\data\\admin.txt";
+            //const string pathBanDoc = "";
 
 
 
@@ -749,5 +749,6 @@ namespace QLThuVien
         static string pathSach = @"D:\projeck_CTDL_giai_thuat\sach.txt";
         static string pathPhieuMuon = @"D:\projeck_CTDL_giai_thuat\phieumuon.txt";
         static string pathBanDoc = @"D:\projeck_CTDL_giai_thuat\bandoc.txt";
+        static string pathAddmin = @"D:\projeck_CTDL_giai_thuat\admin.txt";
     }
 }

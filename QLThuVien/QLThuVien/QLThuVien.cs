@@ -144,9 +144,9 @@ namespace QLThuVien
                             pass += maHoa.KeyChar;
                             Console.Write('*');
                         }
-                        if (maHoa.Key == ConsoleKey.Backspace && pass.Length>=0)
+                        if (maHoa.Key == ConsoleKey.Backspace && pass.Length >= 0)
                         {
-                            pass = pass.Remove(pass.Length - 1); 
+                            pass = pass.Remove(pass.Length - 1);
                             Console.Write("\b \b");
                         }
 
@@ -264,6 +264,7 @@ namespace QLThuVien
         /// <returns></returns>
         static bool QuanLyPhieuMuon(string path)
         {
+            DanhSachPhieuMuon dsPhieuMuon = new DanhSachPhieuMuon();
             while (true)
             {
                 GiaoDien.MenuPhieuMuon();
@@ -274,7 +275,7 @@ namespace QLThuVien
                     case '1':
                         Console.Clear();
                         GiaoDien.HienThiPhieu();
-                        DanhSachPhieuMuon dsPhieuMuon = new DanhSachPhieuMuon();
+
                         //dsPhieuMuon.Doc(@"..\..\..\..\data\phieumuon.txt");
                         dsPhieuMuon.Doc(path);
                         dsPhieuMuon.HienThiDSPhieuMuon();
@@ -286,7 +287,7 @@ namespace QLThuVien
                     case '2':
                         Console.Clear();
                         GiaoDien.MuonSach();
-                        MuonSach(path);
+                        MuonSach(dsPhieuMuon, path);
                         break;
                     //Trả Sách 
                     case '3':
@@ -308,7 +309,6 @@ namespace QLThuVien
                         }
                         Console.Clear();
                         break;
-
                 }
             }
         }
@@ -316,9 +316,8 @@ namespace QLThuVien
         /// hàm mượn sách
         /// </summary>
         /// <param name="path"></param>
-        static void MuonSach(string path)
+        static void MuonSach(DanhSachPhieuMuon danhSachPhieuMuon, string path)
         {
-            LinkedList<PhieuMuon> L = new LinkedList<PhieuMuon>();
             // Đọc dữ liệu từ file để tạo số thứ tự phiếu mượn mới
             int soThuTuPhieuMuon = LaySoThuTuPhieuMuon(path);
 
@@ -326,8 +325,6 @@ namespace QLThuVien
             string maBanDoc;
             do
             {
-                //Console.Clear();
-                //GiaoDien.MenuPhieuMuon();
                 Console.Write("Nhập mã bạn đọc: ");
                 maBanDoc = Console.ReadLine();
 
@@ -351,22 +348,23 @@ namespace QLThuVien
                 // Tạo đối tượng Phiếu Mượn mới
                 PhieuMuon phieuMuon = new PhieuMuon(soThuTuPhieuMuon, maBanDoc, maSach, ngayMuon, ngayPhaiTra, tinhTrangPhieuMuon);
 
-                // Đọc danh sách phiếu mượn từ file
-                L = DocDanhSachPhieuMuon();
+                // Tăng số thứ tự phiếu mượn mới lên 1
+                soThuTuPhieuMuon++;
 
                 // Thêm phiếu mượn mới vào danh sách
-                L.AddLast(phieuMuon);
+                danhSachPhieuMuon.L.AddLast(phieuMuon);
 
                 // Ghi danh sách phiếu mượn sau khi cập nhật vào file
-                GhiPhieuMuon(path, L);
+                danhSachPhieuMuon.Ghi(path);
 
                 // Cập nhật tình trạng phiếu mượn và tình trạng sách
-                CapNhatTinhTrangPhieuMuon(path, soThuTuPhieuMuon);
+                CapNhatTinhTrangPhieuMuon(soThuTuPhieuMuon);
                 CapNhatTinhTrangSach(maSach, tinhTrangPhieuMuon);
 
                 Console.WriteLine("Mượn sách thành công!");
             }
         }
+
         /// <summary>
         /// hàm lấy số thứ tự phiếu mượn mới
         /// </summary>
@@ -408,31 +406,31 @@ namespace QLThuVien
         /// </summary>
         /// <param name="path"></param>
         /// <param name="phieuMuon"></param>
-        static void GhiPhieuMuon(string path, LinkedList<PhieuMuon> danhSachPhieuMuon)
-        {
-            try
-            {
-                using (StreamWriter sw = new StreamWriter(pathPhieuMuon, false)) // Sử dụng tham số false để ghi đè nội dung file
-                {
-                    foreach (PhieuMuon phieuMuon in danhSachPhieuMuon)
-                    {
-                        string line = $"{phieuMuon.SoPhieuMuon}#{phieuMuon.MaBanDoc}#{phieuMuon.MaSach}#{phieuMuon.NgayMuon}#{phieuMuon.NgayPhaiTra}#{phieuMuon.TinhTrangPhieuMuon}";
-                        sw.WriteLine(line);
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                throw new Exception("Không thể ghi file danh sách phiếu mượn.");
-            }
-        }
+        //static void GhiPhieuMuon(LinkedList<PhieuMuon> danhSachPhieuMuon)
+        //{
+        //    try
+        //    {
+        //        using (StreamWriter sw = new StreamWriter(pathPhieuMuon, false)) // Sử dụng tham số false để ghi đè nội dung file
+        //        {
+        //            foreach (PhieuMuon phieuMuon in danhSachPhieuMuon)
+        //            {
+        //                string line = $"{phieuMuon.SoPhieuMuon}#{phieuMuon.MaBanDoc}#{phieuMuon.MaSach}#{phieuMuon.NgayMuon}#{phieuMuon.NgayPhaiTra}#{phieuMuon.TinhTrangPhieuMuon}";
+        //                sw.WriteLine(line);
+        //            }
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw new Exception("Không thể ghi file danh sách phiếu mượn.");
+        //    }
+        //}
 
         /// <summary>
         /// hàm cập nhật tình trạng phiếu mượn sau khi mượn
         /// </summary>
         /// <param name="path"></param>
         /// <param name="soThuTuPhieuMuon"></param>
-        static void CapNhatTinhTrangPhieuMuon(string path, int soThuTuPhieuMuon)
+        static void CapNhatTinhTrangPhieuMuon(int soThuTuPhieuMuon)
         {
             try
             {
@@ -599,7 +597,9 @@ namespace QLThuVien
         /// <param name="path"></param>
         static void TraSach(string path)
         {
-            LinkedList<PhieuMuon> L = new LinkedList<PhieuMuon>();
+            DanhSachPhieuMuon danhSachPhieuMuon = new DanhSachPhieuMuon();
+            danhSachPhieuMuon.Doc(path); // Đọc danh sách phiếu mượn từ file
+
             string maSach;
             do
             {
@@ -613,26 +613,22 @@ namespace QLThuVien
                 }
             } while (!KiemTraMaSachTontai(maSach));
 
-            // Đọc dữ liệu từ file và tạo danh sách liên kết
-            L = DocDanhSachPhieuMuon();
-
-            // Cập nhật tình trạng sách và phiếu mượn nếu tìm thấy mã sách
             bool daTraSach = false;
-            bool tatCaDaTra = true; // Kiểm tra tất cả các phiếu mượn có tình trạng bằng 0 hay không
-            int soPhieuMuonChuaTra = 0; // Số lượng phiếu mượn chưa trả
-            LinkedListNode<PhieuMuon> currentNode = L.First;
+            bool tatCaDaTra = true;
+            int soPhieuMuonChuaTra = 0;
+
+            LinkedListNode<PhieuMuon> currentNode = danhSachPhieuMuon.L.First;
             while (currentNode != null)
             {
                 if (currentNode.Value.MaSach == maSach)
                 {
-                    // Cập nhật tình trạng sách
-                    CapNhatTinhTrangSach(currentNode.Value.MaSach, 0);
+                    CapNhatTinhTrangSach(maSach, 0); // Cập nhật tình trạng sách
 
-                    // Cập nhật tình trạng phiếu mượn thành 0 nếu phiếu chưa được trả
-                    if (currentNode.Value.TinhTrangPhieuMuon == 1)
+                    if (currentNode.Value.TinhTrangPhieuMuon == 1) // Cập nhật tình trạng phiếu mượn
                     {
                         currentNode.Value.TinhTrangPhieuMuon = 0;
                         daTraSach = true;
+
                     }
                 }
 
@@ -647,8 +643,7 @@ namespace QLThuVien
 
             if (daTraSach)
             {
-                // Ghi lại danh sách phiếu mượn sau khi cập nhật vào file
-                GhiPhieuMuon(pathPhieuMuon, L);
+                danhSachPhieuMuon.Ghi(path); // Ghi lại danh sách phiếu mượn sau khi cập nhật vào file
 
                 Console.WriteLine("Đã trả sách thành công.");
 
@@ -673,47 +668,47 @@ namespace QLThuVien
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        static LinkedList<PhieuMuon> DocDanhSachPhieuMuon()
-        {
-            LinkedList<PhieuMuon> danhSachPhieuMuon = new LinkedList<PhieuMuon>();
+        //static LinkedList<PhieuMuon> DocDanhSachPhieuMuon()
+        //{
+        //    LinkedList<PhieuMuon> danhSachPhieuMuon = new LinkedList<PhieuMuon>();
 
-            // Đọc dữ liệu từ file và thêm vào danh sách liên kết
-            try
-            {
-                if (File.Exists(pathPhieuMuon))
-                {
-                    string[] lines = File.ReadAllLines(pathPhieuMuon);
-                    foreach (string line in lines)
-                    {
-                        string[] parts = line.Split('#');
-                        if (parts.Length >= 6)
-                        {
-                            int soPhieuMuon, tinhTrangPhieuMuon;
-                            DateTime ngayMuon, ngayPhaiTra;
-                            if (int.TryParse(parts[0], out soPhieuMuon) &&
-                                DateTime.TryParse(parts[3], out ngayMuon) &&
-                                DateTime.TryParse(parts[4], out ngayPhaiTra) &&
-                                int.TryParse(parts[5], out tinhTrangPhieuMuon))
-                            {
-                                PhieuMuon phieuMuon = new PhieuMuon(soPhieuMuon, parts[1], parts[2], ngayMuon, ngayPhaiTra, tinhTrangPhieuMuon);
-                                danhSachPhieuMuon.AddLast(phieuMuon);
-                            }
-                        }
-                    }
-                }
-                else
-                {
+        //    // Đọc dữ liệu từ file và thêm vào danh sách liên kết
+        //    try
+        //    {
+        //        if (File.Exists(pathPhieuMuon))
+        //        {
+        //            string[] lines = File.ReadAllLines(pathPhieuMuon);
+        //            foreach (string line in lines)
+        //            {
+        //                string[] parts = line.Split('#');
+        //                if (parts.Length >= 6)
+        //                {
+        //                    int soPhieuMuon, tinhTrangPhieuMuon;
+        //                    DateTime ngayMuon, ngayPhaiTra;
+        //                    if (int.TryParse(parts[0], out soPhieuMuon) &&
+        //                        DateTime.TryParse(parts[3], out ngayMuon) &&
+        //                        DateTime.TryParse(parts[4], out ngayPhaiTra) &&
+        //                        int.TryParse(parts[5], out tinhTrangPhieuMuon))
+        //                    {
+        //                        PhieuMuon phieuMuon = new PhieuMuon(soPhieuMuon, parts[1], parts[2], ngayMuon, ngayPhaiTra, tinhTrangPhieuMuon);
+        //                        danhSachPhieuMuon.AddLast(phieuMuon);
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        else
+        //        {
 
-                    throw new Exception("File danh sách phiếu mượn không tồn tại.");
-                }
-            }
-            catch (Exception)
-            {
-                throw new Exception("Không thể đọc file danh sách phiếu mượn.");
-            }
+        //            throw new Exception("File danh sách phiếu mượn không tồn tại.");
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw new Exception("Không thể đọc file danh sách phiếu mượn.");
+        //    }
 
-            return danhSachPhieuMuon;
-        }
+        //    return danhSachPhieuMuon;
+        //}
         /// <summary>
         /// hàm cập nhật tình trạng sách sau khi mượn và trả
         /// </summary>

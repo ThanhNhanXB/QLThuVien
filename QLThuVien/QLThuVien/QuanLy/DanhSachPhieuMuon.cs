@@ -52,45 +52,104 @@ namespace QLThuVien
             Console.ResetColor();
         }
 
-        // Hàm ghi file
-        public void Ghi(LinkedList<PhieuMuon> L, string path)
+        //// Hàm ghi file
+        //public void Ghi(LinkedList<PhieuMuon> L, string path)
+        //{
+        //    try
+        //    {
+        //        using (StreamWriter sw = new StreamWriter(path))
+        //        {
+        //            for (LinkedListNode<PhieuMuon> p = L.First; p != null; p = p.Next)
+        //            {
+        //                sw.WriteLine(p.Value);
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine("Khong the ghi file");
+
+        //    }
+        //}
+
+        //// Hàm đọc file
+        //public void Doc(string path)
+        //{
+        //    try
+        //    {
+        //        using (StreamReader sr = new StreamReader(path))
+        //        {
+        //            while (!sr.EndOfStream)
+        //            {
+        //                string[] t = sr.ReadLine().Split('#');
+        //                PhieuMuon phieuMuon = new PhieuMuon(int.Parse(t[0]), t[1], t[2], DateTime.Parse(t[3]), DateTime.Parse(t[4]), int.Parse(t[5]));
+        //                L.AddLast(phieuMuon);
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine("Mo file that bai!!!");
+        //    }
+        //}
+        public void Ghi(string path)
         {
             try
             {
-                using (StreamWriter sw = new StreamWriter(path))
+                using (StreamWriter sw = new StreamWriter(path, false)) // Sử dụng tham số false để ghi đè nội dung file
                 {
-                    for (LinkedListNode<PhieuMuon> p = L.First; p != null; p = p.Next)
+                    foreach (PhieuMuon phieuMuon in L)
                     {
-                        sw.WriteLine(p.Value);
+                        string line = $"{phieuMuon.SoPhieuMuon}#{phieuMuon.MaBanDoc}#{phieuMuon.MaSach}#{phieuMuon.NgayMuon}#{phieuMuon.NgayPhaiTra}#{phieuMuon.TinhTrangPhieuMuon}";
+                        sw.WriteLine(line);
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine("Khong the ghi file");
-
+                throw new Exception("Không thể ghi file danh sách phiếu mượn.");
             }
         }
 
         // Hàm đọc file
         public void Doc(string path)
         {
+            L.Clear();
+            //Đọc dữ liệu từ file và thêm vào danh sách liên kết
             try
             {
-                using (StreamReader sr = new StreamReader(path))
+                if (File.Exists(path))
                 {
-                    while (!sr.EndOfStream)
+                    string[] lines = File.ReadAllLines(path);
+                    foreach (string line in lines)
                     {
-                        string[] t = sr.ReadLine().Split('#');
-                        PhieuMuon phieuMuon = new PhieuMuon(int.Parse(t[0]), t[1], t[2], DateTime.Parse(t[3]), DateTime.Parse(t[4]), int.Parse(t[5]));
-                        L.AddLast(phieuMuon);
+                        string[] parts = line.Split('#');
+                        if (parts.Length >= 6)
+                        {
+                            int soPhieuMuon, tinhTrangPhieuMuon;
+                            DateTime ngayMuon, ngayPhaiTra;
+                            if (int.TryParse(parts[0], out soPhieuMuon) &&
+                                DateTime.TryParse(parts[3], out ngayMuon) &&
+                                DateTime.TryParse(parts[4], out ngayPhaiTra) &&
+                                int.TryParse(parts[5], out tinhTrangPhieuMuon))
+                            {
+                                PhieuMuon phieuMuon = new PhieuMuon(soPhieuMuon, parts[1], parts[2], ngayMuon, ngayPhaiTra, tinhTrangPhieuMuon);
+                                L.AddLast(phieuMuon);
+                            }
+                        }
                     }
                 }
+                else
+                {
+
+                    throw new Exception("File danh sách phiếu mượn không tồn tại.");
+                }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine("Mo file that bai!!!");
+                throw new Exception("Không thể đọc file danh sách phiếu mượn.");
             }
         }
+
     }
 }

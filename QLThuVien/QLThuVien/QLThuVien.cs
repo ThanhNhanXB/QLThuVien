@@ -20,10 +20,10 @@ namespace QLThuVien
 
 
             //khai báo 
-            //const string pathSach = "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\data\\sach.txt";
-            //const string pathPhieuMuon = "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\data\\phieumuon.txt";
-            //const string pathAddmin = "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\data\\admin.txt";
-            //const string pathBanDoc = "";
+            const string pathSach = "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\data\\sach.txt";
+            const string pathPhieuMuon = "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\data\\phieumuon.txt";
+            const string pathAddmin = "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\data\\admin.txt";
+            const string pathBanDoc = "";
 
 
 
@@ -141,14 +141,13 @@ namespace QLThuVien
                     {
                         maHoa = new ConsoleKeyInfo();
                         maHoa = Console.ReadKey(true);
-                        if(maHoa.Key != ConsoleKey.Enter)
+                        if (char.IsLetterOrDigit(maHoa.KeyChar))
                         {
-
+                            pass += maHoa.KeyChar;
                             Console.Write('*');
-                        Console.Write('*');
-
-                        pass += maHoa.KeyChar;
-                        Console.Write('*');
+                        }
+                        if (maHoa.Key == ConsoleKey.Backspace && pass.Length > 0)
+                        {
                             pass = pass.Remove(pass.Length - 1);
                             Console.Write("\b \b");
                         }
@@ -246,11 +245,12 @@ namespace QLThuVien
                         s.NhapThemSach();
 
                         LinkedListNode<Sach> ketQua = sach.FindMaSach(s.MaSach);
-                       
+
                         // Mở tệp tin để ghi thêm sách mới
                         sach.Ghi(s, filePath);
+                        Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("\n       Thêm sách thành công!        \n".PadLeft(Console.WindowWidth / 2 + 36 / 2));
-                        
+                        Console.Write("       Ấn Phím bất Kỳ Để Trở Về     \n".PadLeft(Console.WindowWidth / 2 + 36 / 2));
                         break;
                     //Xóa sách 
                     case '3':
@@ -305,7 +305,7 @@ namespace QLThuVien
                             Console.WriteLine("Không tìm thấy sách với mã sách đã nhập!\n".PadLeft(Console.WindowWidth / 2 + 40 / 2));
                             Console.ResetColor();
                         }
-                       
+                        Console.Write("       Ấn Phím bất Kỳ Để Trở Về     \n".PadLeft(Console.WindowWidth / 2 + 36 / 2));
                         break;
                     //trở về 
                     case '4':
@@ -353,12 +353,18 @@ namespace QLThuVien
                         Console.Clear();
                         GiaoDien.MuonSach();
                         MuonSach(path);
+                        Console.Write("       Ấn Phím bất Kỳ Để Trở Về     \n".PadLeft(Console.WindowWidth / 2 + 36 / 2));
+                        Console.ReadKey(true);
+                        Console.Clear();
                         break;
                     //Trả Sách 
                     case '3':
                         Console.Clear();
                         GiaoDien.TraSach();
                         TraSach(path);
+                        Console.Write("       Ấn Phím bất Kỳ Để Trở Về     \n".PadLeft(Console.WindowWidth / 2 + 36 / 2));
+                        Console.ReadKey(true);
+                        Console.Clear();
                         break;
                     //Trở về 
                     case '4':
@@ -394,16 +400,19 @@ namespace QLThuVien
             {
                 //Console.Clear();
                 //GiaoDien.MenuPhieuMuon();
-                Console.Write("Nhập mã bạn đọc: ");
+                Console.Write("Nhập mã bạn đọc: ".PadLeft(Console.WindowWidth / 3 + 18 / 2));
                 maBanDoc = Console.ReadLine();
 
                 if (!KiemTraMaBanDocTonTai(maBanDoc))
                 {
-                    Console.WriteLine("Mã bạn đọc không tồn tại. Vui lòng nhập lại!");
+                    Console.Clear();
+                    GiaoDien.MuonSach();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Mã bạn đọc không tồn tại. Vui lòng nhập lại!".PadLeft(Console.WindowWidth / 2 + 44 / 2));
+                    Console.ResetColor();
                 }
             } while (!KiemTraMaBanDocTonTai(maBanDoc));
-
-            Console.Write("Nhập mã sách: ");
+            Console.Write("Nhập mã sách:   ".PadLeft(Console.WindowWidth / 3 + 18 / 2));
             string maSach = Console.ReadLine();
 
             // Kiểm tra tình trạng sách
@@ -581,7 +590,9 @@ namespace QLThuVien
                             if (tinhTrangPhieuMuon != 0)
                             {
                                 Console.Clear();
-                                Console.WriteLine("Sách có mã {0} đang được mượn. Vui lòng nhập lại mã sách khác.", maSach);
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine($"Sách có mã {maSach} đang được mượn. Vui lòng nhập lại mã sách khác.".PadLeft(Console.WindowWidth / 2));
+                                Console.ResetColor();
                                 return false;
                             }
                             else
@@ -627,7 +638,10 @@ namespace QLThuVien
             }
 
             Console.Clear();
-            Console.WriteLine("Sách có mã {0} không tồn tại. Vui lòng nhập lại mã sách khác.", maSach);
+            Console.ForegroundColor = ConsoleColor.Red;
+            string str = $"Sách có mã {maSach} không tồn tại. Vui lòng nhập lại mã sách khác".PadLeft(Console.WindowWidth / 2 + 66 / 2);
+            Console.WriteLine(str);
+            Console.ResetColor();
             return false;
         }
         /// <summary>
@@ -668,13 +682,15 @@ namespace QLThuVien
             int soPhieuMuon;
             do
             {
-                Console.Write("Nhập số phiếu mượn: ");
-                soPhieuMuon = int.Parse(Console.ReadLine());
+                Console.Write("Nhập số phiếu mượn: ".PadLeft(Console.WindowWidth / 3 + 10));
+                int.TryParse(Console.ReadLine(), out soPhieuMuon);
                 if (!KiemTraPhieuMuonTontai(soPhieuMuon))
                 {
                     Console.Clear();
                     GiaoDien.TraSach();
-                    Console.WriteLine("Mã sách không tồn tại. Vui lòng nhập lại!");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Phiếu Mượn không tồn tại. Vui lòng nhập lại!".PadLeft(Console.WindowWidth / 2 + 40 / 2));
+                    Console.ResetColor();
                 }
             } while (!KiemTraPhieuMuonTontai(soPhieuMuon));
 
@@ -710,26 +726,27 @@ namespace QLThuVien
                 currentNode = currentNode.Next;
             }
 
+            Console.ForegroundColor = ConsoleColor.Red;
             if (daTraSach)
             {
                 // Ghi lại danh sách phiếu mượn sau khi cập nhật vào file
                 GhiPhieuMuon(L);
-
-                Console.WriteLine("Đã trả sách thành công.");
+                Console.WriteLine("Đã trả sách thành công.".PadLeft(Console.WindowWidth / 2 + 30 / 2));
 
                 if (tatCaDaTra)
                 {
-                    Console.WriteLine("Tất cả các phiếu mượn đã được trả.");
+                    Console.WriteLine("Tất cả các phiếu mượn đã được trả.".PadLeft(Console.WindowWidth / 2 + 30 / 2));
                 }
                 else
                 {
-                    Console.WriteLine($"Còn {soPhieuMuonChuaTra} phiếu mượn chưa được trả.");
+                    Console.WriteLine($"Còn {soPhieuMuonChuaTra} phiếu mượn chưa được trả.".PadLeft(Console.WindowWidth / 2 + 30 / 2));
                 }
             }
             else
             {
-                Console.WriteLine($"Phiếu mượn số {soPhieuMuon} đã được trả.");
+                Console.WriteLine($"Phiếu mượn số {soPhieuMuon} đã được trả.".PadLeft(Console.WindowWidth / 2 + 30 / 2));
             }
+            Console.ResetColor();
         }
 
 
@@ -811,9 +828,9 @@ namespace QLThuVien
         /// <summary>
         /// đường link dẫn tới file
         /// </summary>
-        static string pathSach = @"D:\projeck_CTDL_giai_thuat\sach.txt";
-        static string pathPhieuMuon = @"D:\projeck_CTDL_giai_thuat\phieumuon.txt";
-        static string pathBanDoc = @"D:\projeck_CTDL_giai_thuat\bandoc.txt";
+        static string pathSach = @"D:\QLThuVien\QLThuVien\QLThuVien\data\sach.txt";
+        static string pathPhieuMuon = @"D:\QLThuVien\QLThuVien\QLThuVien\data\phieumuon.txt";
+        static string pathBanDoc = @"D:\QLThuVien\QLThuVien\QLThuVien\data\bandoc.txt";
         static string pathAddmin = @"D:\projeck_CTDL_giai_thuat\admin.txt";
     }
 }

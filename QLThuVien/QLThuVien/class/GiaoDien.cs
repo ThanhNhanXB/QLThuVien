@@ -106,11 +106,15 @@ namespace QLThuVien
             str += "------------------------------------\n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
             str += "------------------------------------\n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
             Console.WriteLine(str);
-            Console.ForegroundColor = ConsoleColor.White;
-            str = "       1--Hiển Thị Thông Tin Sách   \n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
-            str += "      2--Thêm Sách                 \n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
-            str += "      3--Xóa Sách                  \n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
-            str += "      Esc--Thoát                   \n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
+            Console.ResetColor(); 
+            Console.ForegroundColor = ConsoleColor.Blue;
+            str =  "    1--Hiển Thị Thông Tin Sách     \n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
+            str += "    2--Thêm Sách                   \n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
+            str += "    3--Xóa Sách                    \n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
+            str += "    4--Trở Về                      \n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
+            Console.Write(str);
+            Console.ForegroundColor = ConsoleColor.Red;
+            str = "    >>Esc--Thoát                   \n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
             Console.WriteLine(str);
             Console.ResetColor();
 
@@ -192,12 +196,16 @@ namespace QLThuVien
             str += "------------------------------------\n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
             str += "------------------------------------\n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
             Console.Write(str);
-            Console.ForegroundColor = ConsoleColor.White;
-            str = "1--Hiển Thị Phiếu Mượn              \n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
-            str += "2--Mượn Sách                        \n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
-            str += "3--Trả Sách                         \n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
-            str += "Esc--Thoát                          \n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
+            Console.ForegroundColor = ConsoleColor.Blue;
+            str = ""; 
+            str += "     1--Hiển Thị Phiếu Mượn         \n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
+            str += "     2--Mượn Sách                   \n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
+            str += "     3--Trả Sách                    \n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
+            str += "     4--Trở Về                      \n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
             Console.WriteLine(str);
+            Console.ForegroundColor = ConsoleColor.Red;
+            str = "     >>Esc--Thoát                    \n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
+            Console.Write(str);
             Console.ResetColor();
 
         }

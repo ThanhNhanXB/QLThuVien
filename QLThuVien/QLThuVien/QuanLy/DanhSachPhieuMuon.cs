@@ -38,7 +38,6 @@ namespace QLThuVien
         //methods
         public void HienThiDSPhieuMuon()
         {
-                
             Console.ForegroundColor = ConsoleColor.DarkGray;
             int strLength = 76; 
             Console.WriteLine("+-------------+----------+----------+----------+-------------+-------------+".PadLeft(Console.WindowWidth/2+strLength/2));
@@ -61,7 +60,7 @@ namespace QLThuVien
                 {
                     for (LinkedListNode<PhieuMuon> p = L.First; p != null; p = p.Next)
                     {
-                        sw.WriteLine(p.Value);
+                        sw.WriteLine(p.Value.toString());
                     }
                 }
             }

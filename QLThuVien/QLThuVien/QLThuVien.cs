@@ -1,6 +1,6 @@
 ﻿/*
- * Đồ Án Quản Lý Thư Viện 
- */
+* Đồ Án Quản Lý Thư Viện 
+*/
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +20,10 @@ namespace QLThuVien
 
 
             //khai báo 
-            const string pathSach = "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\data\\sach.txt"; 
-            const string pathPhieuMuon = "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\data\\phieumuon.txt"; 
-            const string pathAddmin = "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\data\\admin.txt"; 
-            const string pathBanDoc =""; 
+            const string pathSach = "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\data\\sach.txt";
+            const string pathPhieuMuon = "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\data\\phieumuon.txt";
+            const string pathAddmin = "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\data\\admin.txt";
+            const string pathBanDoc = "";
 
 
 
@@ -133,19 +133,19 @@ namespace QLThuVien
                         Console.ResetColor();
                         Console.WriteLine("Username: ".PadLeft(Console.WindowWidth / 3 + 8) + user);
                     }
-                    pass = ""; 
+                    pass = "";
                     Console.Write("Password: ".PadLeft(Console.WindowWidth / 3 + 8));
-                    
+
                     //Mã hóa mật khẩu thành dấu *
                     do
                     {
                         maHoa = new ConsoleKeyInfo();
                         maHoa = Console.ReadKey(true);
-                        if(maHoa.Key != ConsoleKey.Enter)
+                        if (maHoa.Key != ConsoleKey.Enter)
                         {
 
-                        pass += maHoa.KeyChar;
-                        Console.Write('*');
+                            pass += maHoa.KeyChar;
+                            Console.Write('*');
                         }
                     } while (maHoa.Key != ConsoleKey.Enter);
 
@@ -240,24 +240,21 @@ namespace QLThuVien
                         s.NhapThemSach();
 
                         LinkedListNode<Sach> ketQua = sach.FindMaSach(s.MaSach);
-                        // Kiểm tra nếu sách đã tồn tại trong tệp tin
-                        if (ketQua != null) 
-                        {
-                            Console.WriteLine("\n     Sách đã tồn tại trong tệp!     \n".PadLeft(Console.WindowWidth / 2 + 36 / 2));
-                        }
-                        else
-                        {
-                            // Mở tệp tin để ghi thêm sách mới
-                            sach.Ghi(s, filePath);
-                            Console.WriteLine("\n       Thêm sách thành công!        \n".PadLeft(Console.WindowWidth / 2 + 36 / 2));
-                        }
+                       
+                        // Mở tệp tin để ghi thêm sách mới
+                        sach.Ghi(s, filePath);
+                        Console.WriteLine("\n       Thêm sách thành công!        \n".PadLeft(Console.WindowWidth / 2 + 36 / 2));
+                        
                         break;
                     //Xóa sách 
                     case '3':
                         Console.Clear();
                         GiaoDien.XoaSach();
+
+                        // Đường dẫn đến file
                         string pathBook = @"D:\Project\CTDL\QLThuVien\QLThuVien\QLThuVien\data\sach.txt";
-                       
+
+                        //Nhập mã sách cần xóa từ người dùng
                         Console.Write("Nhập mã sách cần xóa: ".PadLeft(Console.WindowWidth / 3 + 8));
                         string maSach = Console.ReadLine();
 
@@ -265,32 +262,44 @@ namespace QLThuVien
                         List<string> lines = new List<string>(File.ReadAllLines(pathBook));
 
                         bool bookDeleted = false;
-
                         // Tìm và xóa sách dựa trên mã sách
                         for (int i = 0; i < lines.Count; i++)
                         {
                             string[] bookData = lines[i].Split('#');
 
+                            //Tìm trong file xem tinhTrangSach ở vị trí thứ bao nhiêu trong file
+                            int tinhTrangSach = int.Parse(bookData[8].Trim());
+
                             // Kiểm tra mã sách trong dữ liệu sách
                             if (bookData.Length > 0 && bookData[0] == maSach)
                             {
-                                lines.RemoveAt(i);
-                                bookDeleted = true;
-                                break;
+                                if (tinhTrangSach != 0)
+                                {
+                                    Console.WriteLine("Không thể xóa sách vì sách đã có người mượn! ".PadLeft(Console.WindowWidth / 2 + 46 / 2));
+                                    break;
+                                }
+                                else
+                                {
+                                    //Thực hiện xóa 
+                                    lines.RemoveAt(i);
+                                    bookDeleted = true;
+                                    // Ghi lại danh sách sách sau khi xóa
+                                    File.WriteAllLines(pathBook, lines);
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("Xóa sách thành công!".PadLeft(Console.WindowWidth / 2 + 20 / 2));
+                                    Console.ResetColor();
+                                    break;
+                                }
                             }
                         }
-
-                        if (bookDeleted)
+                        if (bookDeleted == false)
                         {
-                            // Ghi lại danh sách sách sau khi xóa
-                            File.WriteAllLines(pathBook, lines);
-                            Console.WriteLine("Xóa sách thành công!");
+                            //Thông báo khi kh tìm thấy mã sách đã nhập
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Không tìm thấy sách với mã sách đã nhập!\n".PadLeft(Console.WindowWidth / 2 + 40 / 2));
+                            Console.ResetColor();
                         }
-                        else
-                        {
-                            Console.WriteLine("Không tìm thấy sách với mã sách đã nhập!");
-                        }
-
+                       
                         break;
                     //trở về 
                     case '4':
@@ -306,11 +315,10 @@ namespace QLThuVien
                         }
                         Console.Clear();
                         break;
-
                 }
             }
         }
-        /// <summary>
+        /// <summary>s
         /// Chức năng quản lý phiếu mượn 
         /// </summary>
         /// <returns></returns>
@@ -330,8 +338,8 @@ namespace QLThuVien
                         //dsPhieuMuon.Doc(@"..\..\..\..\data\phieumuon.txt");
                         dsPhieuMuon.Doc(path);
                         dsPhieuMuon.HienThiDSPhieuMuon();
-                        Console.Write("       Ấn Phím bất Kỳ Để Trở Về     \n".PadLeft(Console.WindowWidth/2+36/2));
-                        Console.ReadKey(true); 
+                        Console.Write("       Ấn Phím bất Kỳ Để Trở Về     \n".PadLeft(Console.WindowWidth / 2 + 36 / 2));
+                        Console.ReadKey(true);
                         Console.Clear();
                         break;
                     //Mượn sách 

@@ -8,19 +8,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Windows\\.nuget\\packages\\": {}
+    "C:\\Users\\ACER\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\QLThuVien.csproj",
+      "projectUniqueName": "E:\\QLThuVien\\QLThuVien\\QLThuVien.csproj",
       "projectName": "QLThuVien",
-      "projectPath": "E:\\Project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\QLThuVien.csproj",
-      "packagesPath": "C:\\Users\\Windows\\.nuget\\packages\\",
-      "outputPath": "E:\\Project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\obj\\",
+      "projectPath": "E:\\QLThuVien\\QLThuVien\\QLThuVien.csproj",
+      "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
+      "outputPath": "E:\\QLThuVien\\QLThuVien\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Windows\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ACER\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

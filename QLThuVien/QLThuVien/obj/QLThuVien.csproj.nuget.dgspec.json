@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\QLThuVien\\QLThuVien\\QLThuVien.csproj": {}
+    "D:\\QLThuVien\\QLThuVien\\QLThuVien\\QLThuVien.csproj": {}
   },
   "projects": {
-    "E:\\QLThuVien\\QLThuVien\\QLThuVien.csproj": {
+    "D:\\QLThuVien\\QLThuVien\\QLThuVien\\QLThuVien.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\QLThuVien\\QLThuVien\\QLThuVien.csproj",
+        "projectUniqueName": "D:\\QLThuVien\\QLThuVien\\QLThuVien\\QLThuVien.csproj",
         "projectName": "QLThuVien",
-        "projectPath": "E:\\QLThuVien\\QLThuVien\\QLThuVien.csproj",
+        "projectPath": "D:\\QLThuVien\\QLThuVien\\QLThuVien\\QLThuVien.csproj",
         "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
-        "outputPath": "E:\\QLThuVien\\QLThuVien\\obj\\",
+        "outputPath": "D:\\QLThuVien\\QLThuVien\\QLThuVien\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ACER\\AppData\\Roaming\\NuGet\\NuGet.Config",

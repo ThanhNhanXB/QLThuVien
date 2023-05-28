@@ -128,7 +128,7 @@ namespace QLThuVien
                         L.AddLast(phieuMuon);
                     }
                 }
-                Console.WriteLine("Doc file thanh cong");
+                
             }
             catch (Exception ex)
             {

@@ -99,7 +99,7 @@ namespace QLThuVien
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Mở file thất bại!!!");
+                throw new Exception("Mở file thất bại!!!");
             }
         }
         public LinkedListNode<Sach> FindMaSach(string maSach)

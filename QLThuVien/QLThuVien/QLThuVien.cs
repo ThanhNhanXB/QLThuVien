@@ -20,14 +20,6 @@ namespace QLThuVien
 
 
             //khai báo 
-            const string pathSach = "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\data\\sach.txt";
-            const string pathPhieuMuon = "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\data\\phieumuon.txt";
-            const string pathAddmin = "D:\\project\\CTDL\\QLThuVien\\QLThuVien\\QLThuVien\\data\\admin.txt";
-            const string pathBanDoc = "";
-
-
-
-
 
             bool dungChuongTrinh = false;
 
@@ -223,7 +215,6 @@ namespace QLThuVien
                         Console.Clear();
                         GiaoDien.HienThiSach();
                         DanhSachSach dsSach = new DanhSachSach();
-                        //dsPhieuMuon.Doc(@"..\..\..\..\data\phieumuon.txt");
                         dsSach.Doc(path);
                         dsSach.HienThiDSSach();
                         Console.Write("       Ấn Phím bất Kỳ Để Trở Về     \n".PadLeft(Console.WindowWidth / 2 + 36 / 2));
@@ -238,8 +229,8 @@ namespace QLThuVien
                         DanhSachSach sach = new DanhSachSach();
                         LinkedList<Sach> L = new LinkedList<Sach>();
                         Sach s = new Sach();
-                        // Đường dẫn tới tệp tin "sach.txt"
-                        string filePath = @"D:\Project\CTDL\QLThuVien\QLThuVien\QLThuVien\data\sach.txt";
+                        // Đường dẫn tới tệp tin "sach.txt"  
+                        string filePath = pathSach;
 
                         // Nhập thông tin sách mới từ người dùng
                         s.NhapThemSach();
@@ -249,8 +240,10 @@ namespace QLThuVien
                         // Mở tệp tin để ghi thêm sách mới
                         sach.Ghi(s, filePath);
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("\n       Thêm sách thành công!        \n".PadLeft(Console.WindowWidth / 2 + 36 / 2));
+                        Console.WriteLine("       Thêm sách thành công!        \n".PadLeft(Console.WindowWidth / 2 + 36 / 2));
                         Console.Write("       Ấn Phím bất Kỳ Để Trở Về     \n".PadLeft(Console.WindowWidth / 2 + 36 / 2));
+                        Console.ReadKey();
+                        Console.Clear();
                         break;
                     //Xóa sách 
                     case '3':
@@ -258,7 +251,7 @@ namespace QLThuVien
                         GiaoDien.XoaSach();
 
                         // Đường dẫn đến file
-                        string pathBook = @"D:\Project\CTDL\QLThuVien\QLThuVien\QLThuVien\data\sach.txt";
+                        string pathBook = pathSach;
 
                         //Nhập mã sách cần xóa từ người dùng
                         Console.Write("Nhập mã sách cần xóa: ".PadLeft(Console.WindowWidth / 3 + 8));
@@ -294,6 +287,10 @@ namespace QLThuVien
                                     Console.ForegroundColor = ConsoleColor.Red;
                                     Console.WriteLine("Xóa sách thành công!".PadLeft(Console.WindowWidth / 2 + 20 / 2));
                                     Console.ResetColor();
+                                    Console.WriteLine("Sách Sau Khi Xóa:    ".PadLeft(Console.WindowWidth / 2 + 20 / 2));
+                                    DanhSachSach list = new DanhSachSach();
+                                    list.Doc(path);
+                                    list.HienThiDSSach();
                                     break;
                                 }
                             }
@@ -306,6 +303,8 @@ namespace QLThuVien
                             Console.ResetColor();
                         }
                         Console.Write("       Ấn Phím bất Kỳ Để Trở Về     \n".PadLeft(Console.WindowWidth / 2 + 36 / 2));
+                        Console.ReadKey();
+                        Console.Clear();
                         break;
                     //trở về 
                     case '4':
@@ -341,16 +340,18 @@ namespace QLThuVien
                         Console.Clear();
                         GiaoDien.HienThiPhieu();
                         DanhSachPhieuMuon dsPhieuMuon = new DanhSachPhieuMuon();
-                        //dsPhieuMuon.Doc(@"..\..\..\..\data\phieumuon.txt");
                         dsPhieuMuon.Doc(path);
                         dsPhieuMuon.HienThiDSPhieuMuon();
                         Console.Write("       Ấn Phím bất Kỳ Để Trở Về     \n".PadLeft(Console.WindowWidth / 2 + 36 / 2));
                         Console.ReadKey(true);
                         Console.Clear();
+                        Console.WriteLine("\x1b[3J");
+
                         break;
                     //Mượn sách 
                     case '2':
                         Console.Clear();
+
                         GiaoDien.MuonSach();
                         MuonSach(path);
                         Console.Write("       Ấn Phím bất Kỳ Để Trở Về     \n".PadLeft(Console.WindowWidth / 2 + 36 / 2));
@@ -370,7 +371,7 @@ namespace QLThuVien
                     case '4':
                         Console.Clear();
                         return false;
-                        break;
+
                     default:
                         if (phimChon.Key == ConsoleKey.Escape)
                         {
@@ -390,7 +391,8 @@ namespace QLThuVien
         static void MuonSach(string path)
         {
             LinkedList<PhieuMuon> L = new LinkedList<PhieuMuon>();
-
+            DanhSachSach dsSach = new DanhSachSach();
+            dsSach.Doc(pathSach);
             // Đọc dữ liệu từ file để tạo số thứ tự phiếu mượn mới
             int soThuTuPhieuMuon = LaySoThuTuPhieuMuon(path);
 
@@ -400,12 +402,14 @@ namespace QLThuVien
             {
                 //Console.Clear();
                 //GiaoDien.MenuPhieuMuon();
+                dsSach.HienThiDSSach();
                 Console.Write("Nhập mã bạn đọc: ".PadLeft(Console.WindowWidth / 3 + 18 / 2));
                 maBanDoc = Console.ReadLine();
 
                 if (!KiemTraMaBanDocTonTai(maBanDoc))
                 {
                     Console.Clear();
+                    dsSach.HienThiDSSach();
                     GiaoDien.MuonSach();
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Mã bạn đọc không tồn tại. Vui lòng nhập lại!".PadLeft(Console.WindowWidth / 2 + 44 / 2));
@@ -439,7 +443,7 @@ namespace QLThuVien
                 CapNhatTinhTrangPhieuMuon(soThuTuPhieuMuon);
                 CapNhatTinhTrangSach(maSach, tinhTrangPhieuMuon);
 
-                Console.WriteLine("Mượn sách thành công!");
+                Console.WriteLine("Mượn sách thành công!".PadLeft(Console.WindowWidth / 2 + 18 / 2));
             }
         }
         /// <summary>
@@ -678,15 +682,20 @@ namespace QLThuVien
         /// <param name="path"></param>
         static void TraSach(string path)
         {
+            DanhSachPhieuMuon dsPhieuMuon = new DanhSachPhieuMuon();
+            dsPhieuMuon.Doc(path);
             LinkedList<PhieuMuon> L = new LinkedList<PhieuMuon>();
             int soPhieuMuon;
             do
             {
+
+                dsPhieuMuon.HienThiDSPhieuMuon();
                 Console.Write("Nhập số phiếu mượn: ".PadLeft(Console.WindowWidth / 3 + 10));
                 int.TryParse(Console.ReadLine(), out soPhieuMuon);
                 if (!KiemTraPhieuMuonTontai(soPhieuMuon))
                 {
                     Console.Clear();
+                    dsPhieuMuon.HienThiDSPhieuMuon();
                     GiaoDien.TraSach();
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Phiếu Mượn không tồn tại. Vui lòng nhập lại!".PadLeft(Console.WindowWidth / 2 + 40 / 2));
@@ -831,6 +840,6 @@ namespace QLThuVien
         static string pathSach = @"D:\QLThuVien\QLThuVien\QLThuVien\data\sach.txt";
         static string pathPhieuMuon = @"D:\QLThuVien\QLThuVien\QLThuVien\data\phieumuon.txt";
         static string pathBanDoc = @"D:\QLThuVien\QLThuVien\QLThuVien\data\bandoc.txt";
-        static string pathAddmin = @"D:\projeck_CTDL_giai_thuat\admin.txt";
+        static string pathAddmin = @"D:\QLThuVien\QLThuVien\QLThuVien\data\admin.txt";
     }
 }

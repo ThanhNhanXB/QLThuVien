@@ -202,7 +202,7 @@ namespace QLThuVien
             str += "     2--Mượn Sách                   \n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
             str += "     3--Trả Sách                    \n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
             str += "     4--Trở Về                      \n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
-            Console.WriteLine(str);
+            Console.Write(str);
             Console.ForegroundColor = ConsoleColor.Red;
             str = "     >>Esc--Thoát                    \n".PadLeft(Console.WindowWidth / 2 + strLength / 2);
             Console.Write(str);
